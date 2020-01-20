@@ -6,18 +6,14 @@
 #include "UART_interface.h"
 #include "LCD_interface.h"
 #include "RTC_interface.h"
+#include "EEPROM_INTERNAL_interface.h"
+#include "DCLOCK_interface.h"
 
-#define DCLOCK_ALARM_SET 1
-#define DCLOCK_ALARM_CLEARED 0
-
-volatile u8 u8index = 0;
-volatile u8 u8Byte;
 volatile u32 u32CountTime;
-u8 u8HoursAlarm;
-u8 u8MinutesAlarm;
-RTC_t rtc;
-volatile u8 u8TimeArray[4];
-volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
+extern volatile u8 u8AlarmFlag;
+extern RTC_t rtc;
+extern u8 u8HoursAlarm;
+extern u8 u8MinutesAlarm;
 
 void vidGetTime(void);
 void vidCountOneSecond(void);
@@ -33,7 +29,7 @@ void main(void)
 	RTC_vidInit();
 
 	INTERRUPTS_vidEnableInterrupt(INTERRUPTS_USART_RXC);
-	INTERRUPTS_vidPutISRFunction(INTERRUPTS_USART_RXC,vidGetTime);
+	INTERRUPTS_vidPutISRFunction(INTERRUPTS_USART_RXC,DCLOCK_vidGetTime);
 
 	TIMER0_vidInit(TIMER0_WGM_NORMAL,TIMER0_COM_NORMAL,TIMER0_CLK_1);
 
@@ -43,6 +39,10 @@ void main(void)
 	INTERRUPTS_vidSetGlobalInterruptFlag();
 
 	DIO_vidSetPinDirection(DIO_PORTA,DIO_PIN3,DIO_OUTPUT);
+
+	/*After reset, check alarm flag in case the alarm was set and the microcontroller
+	 * has been reset afterwards before the alarm was cleared*/
+	DCLOCK_vidCheckAlarmFlag();
 	while(1) {			
 	}
 }
@@ -77,38 +77,4 @@ void vidCountOneSecond(void)
 	}
 }
 
-void vidGetTime(void)
-{
 
-	u8Byte = UART_u8GetReceivedByte();
-	u8TimeArray[u8index] = u8Byte;
-	u8index++;
-	if (u8index == 4)
-	{
-		u8index = 0;
-		if (u8TimeArray[0] == 'c')
-		{
-			rtc.u8Seconds = RTC_DEC2BCD(u8TimeArray[3]);
-			rtc.u8Minutes = RTC_DEC2BCD(u8TimeArray[2]);
-			rtc.u8Hours = RTC_DEC2BCD(u8TimeArray[1]);
-			RTC_vidSetTime(&rtc);
-	
-		}
-		else if (u8TimeArray[0] == 'a')
-		{
-
-			LCD_vidGoToXY(LCD_XPOS0+LCD_XPOS_SHIFT,LCD_YPOS2);
-			LCD_vidWriteNumber(u8TimeArray[1]);
-			LCD_vidGoToXY(LCD_XPOS2+LCD_XPOS_SHIFT,LCD_YPOS2);
-			LCD_vidWriteCharacter(':');
-			LCD_vidGoToXY(LCD_XPOS3+LCD_XPOS_SHIFT,LCD_YPOS2);
-			LCD_vidWriteNumber(u8TimeArray[2]);
-			/*Store in alarm variables*/
-			u8HoursAlarm = u8TimeArray[1];
-			u8MinutesAlarm = u8TimeArray[2];
-			u8AlarmFlag = DCLOCK_ALARM_SET;
-
-		}
-
-	}
-}

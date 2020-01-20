@@ -2,7 +2,6 @@
 from tkinter import *
 from datetime import datetime as dt
 import serial
-import time
 
 #global variables
 whoursNow = 0
@@ -22,7 +21,7 @@ def getTime():
 
 root = Tk()
 root.title("Time Setter")
-root.maxsize(800,100)
+root.maxsize(800,150)
 
 photo = PhotoImage(file="Crystal_Clear_app_xclock.png")
 root.iconphoto(False,photo)
@@ -35,8 +34,6 @@ hoursSpin = Spinbox(alarmFrame,from_=0,to=23)
 minutesSpin = Spinbox(alarmFrame,from_=0,to=59)
 statusLabel = Label(root,text="",relief=SUNKEN,anchor=W)
 getButton = Button(actionsFrame,text="Get current time",command=getTime)
-
-
 
 #Establishing serial connection
 try:
@@ -73,6 +70,14 @@ def setAlarm():
     except:
         statusLabel['text'] = "Error sending alarm"
 
+def clearAlarm():
+    ser.write(b'u')
+    ser.write(b'u')
+    ser.write(b'u')
+    ser.write(b'u')
+
+clearAlarmButton = Button(alarmFrame,text="Clear alarm",command=clearAlarm)
+
 sendButton = Button(actionsFrame,text="Send time!",command=sendTime)
 setAlarmButton = Button(alarmFrame,text="Set alarm!",command=setAlarm,relief=RAISED)
 
@@ -83,6 +88,7 @@ sendButton.grid(row=0,column=2,sticky=W)
 hoursSpin.grid(row=0,column=0,sticky=W)
 minutesSpin.grid(row=0,column=1,sticky=W)
 setAlarmButton.grid(row=0,column=2,sticky=W)
+clearAlarmButton.grid(row=1,column=2,sticky=W)
 statusLabel.grid(row=1,column=0,columnspan=5,sticky=W+E)
 
 root.mainloop()
