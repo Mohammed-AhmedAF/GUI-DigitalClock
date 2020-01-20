@@ -16,11 +16,13 @@ RTC_t rtc;
 volatile u8 u8TimeArray[4];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
 
+/*Checking alarm flag when microcontroller is reset*/
 void DCLOCK_vidCheckAlarmFlag(void)
 {
 	u8AlarmFlag = EEPROM_INTERNAL_u8ReadByte(DCLOCK_ALARM_ADDRESS);
 }
 
+/*Alarm is cleared by a command from GUI application*/
 void DCLOCK_vidClearAlarmFlag(void)
 {
 	u8AlarmFlag = DCLOCK_ALARM_CLEARED;

@@ -21,7 +21,8 @@ void main(void)
 
 	INTERRUPTS_vidEnableInterrupt(INTERRUPTS_USART_RXC);
 	INTERRUPTS_vidPutISRFunction(INTERRUPTS_USART_RXC,DCLOCK_vidGetTime);
-
+	
+	/*Timer used to cause an interrupt every second to retrieve current time from RTC*/
 	TIMER0_vidInit(TIMER0_WGM_NORMAL,TIMER0_COM_NORMAL,TIMER0_CLK_1);
 
 	INTERRUPTS_vidEnableInterrupt(INTERRUPTS_TIMER0_OVF);
