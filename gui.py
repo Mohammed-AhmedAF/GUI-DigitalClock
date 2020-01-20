@@ -2,11 +2,14 @@
 from tkinter import *
 from datetime import datetime as dt
 import serial
+import time
 
 #global variables
-hoursNow = 0
+whoursNow = 0
 minutesNow = 0
 secondsNow = 0
+hoursAlarm = 0
+minutesAlarm = 0
 
 time = "Test"
 
@@ -19,37 +22,67 @@ def getTime():
 
 root = Tk()
 root.title("Time Setter")
-root.geometry("400x80")
+root.maxsize(800,100)
 
 photo = PhotoImage(file="Crystal_Clear_app_xclock.png")
 root.iconphoto(False,photo)
 
-actionsFrame = LabelFrame(root,text="Action",padx=5,pady=5)
+actionsFrame = LabelFrame(root,text="Set current time",padx=5,pady=5)
+alarmFrame = LabelFrame(root,text="Set alarm",padx=5,pady=5)
 
-statusLabel = Label(root,text="Hello",relief=SUNKEN,anchor=W)
+#Alarm spinboxes
+hoursSpin = Spinbox(alarmFrame,from_=0,to=23)
+minutesSpin = Spinbox(alarmFrame,from_=0,to=59)
+statusLabel = Label(root,text="",relief=SUNKEN,anchor=W)
 getButton = Button(actionsFrame,text="Get current time",command=getTime)
+
+
 
 #Establishing serial connection
 try:
     ser = serial.Serial('/dev/ttyUSB0',9600)
+    statusLabel['text'] = "Connection established!"
 except:
     statusLabel['text'] = "Connection could not be established"
+
 
 def sendTime():
     getTime()
     try:
+        ser.write(b'c')
         ser.write(int(hoursNow).to_bytes(1,'little'))
         ser.write(int(minutesNow).to_bytes(1,'little'))
         ser.write(int(secondsNow).to_bytes(1,'little'))
+        statusLabel['text'] = "Current time set"
     except:
-        statusLabel['text'] = "Error sending bytes"
+        statusLabel['text'] = "Error sending current time"
 
+
+def setAlarm():
+    global hoursAlarm, minutesAlarm
+    hoursAlarm = hoursSpin.get()
+    minutesAlarm = minutesSpin.get()
+    statusLabel['text'] = str(hoursAlarm) + ':' + str(minutesAlarm)
+    #sending hours and minutes of alarm via UART
+    try:
+        ser.write(b'a')
+        ser.write(int(hoursAlarm).to_bytes(1,'little'))
+        ser.write(int(minutesAlarm).to_bytes(1,'little'))
+        ser.write(b'q')
+        statusLabel['text'] = "Alarm sent!"
+    except:
+        statusLabel['text'] = "Error sending alarm"
 
 sendButton = Button(actionsFrame,text="Send time!",command=sendTime)
+setAlarmButton = Button(alarmFrame,text="Set alarm!",command=setAlarm,relief=RAISED)
 
-actionsFrame.pack(padx=0,pady=0)
+actionsFrame.grid(row=0,column=0)
+alarmFrame.grid(row=0,column=2)
 getButton.grid(row=0,column=1,sticky=W)
 sendButton.grid(row=0,column=2,sticky=W)
-statusLabel.pack(fill=X)
+hoursSpin.grid(row=0,column=0,sticky=W)
+minutesSpin.grid(row=0,column=1,sticky=W)
+setAlarmButton.grid(row=0,column=2,sticky=W)
+statusLabel.grid(row=1,column=0,columnspan=5,sticky=W+E)
 
 root.mainloop()
