@@ -15,7 +15,6 @@ extern RTC_t rtc;
 extern u8 u8HoursAlarm;
 extern u8 u8MinutesAlarm;
 
-void vidGetTime(void);
 void vidCountOneSecond(void);
 
 void main(void)
