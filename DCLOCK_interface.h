@@ -3,7 +3,7 @@
 void DCLOCK_vidCheckAlarmFlag(void);
 void DCLOCK_vidClearAlarmFlag(void);
 void DCLOCK_vidGetTime(void);
-
+void DCLOCK_vidCountOneSecond(void);
 
 #define DCLOCK_ALARM_ADDRESS 10
 #define DCLOCK_ALARM_SET 1

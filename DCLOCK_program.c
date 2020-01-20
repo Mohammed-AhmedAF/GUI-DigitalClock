@@ -1,12 +1,13 @@
 #include "Std_Types.h"
 #include "Macros.h"
+#include "DIO_interface.h"
 #include "EEPROM_INTERNAL_interface.h"
 #include "UART_interface.h"
 #include "LCD_interface.h"
 #include "RTC_interface.h"
 #include "DCLOCK_interface.h"
 
-
+volatile u32 u32CountTime;
 volatile u8 u8index = 0;
 volatile u8 u8Byte;
 u8 u8HoursAlarm;
@@ -65,6 +66,36 @@ void DCLOCK_vidGetTime(void)
 		else if (u8TimeArray[0] == 'u')
 		{
 			DCLOCK_vidClearAlarmFlag();
+		}
+
+	}
+}
+
+void DCLOCK_vidCountOneSecond(void)
+{
+	u32CountTime++;
+	if (u32CountTime == 31500)
+	{
+		u32CountTime = 0;	
+		LCD_vidSendCommand(LCD_RETURN_HOME);
+		RTC_vidGetTime(&rtc);
+		LCD_vidGoToXY(LCD_XPOS_SHIFT+LCD_XPOS6,LCD_YPOS0);
+		LCD_vidWriteNumber(RTC_BCD2DEC(rtc.u8Seconds));
+		LCD_vidGoToXY(LCD_XPOS_SHIFT+LCD_XPOS5,LCD_YPOS0);
+		LCD_vidWriteCharacter(':');
+		LCD_vidGoToXY(LCD_XPOS_SHIFT+LCD_XPOS3,LCD_YPOS0);
+		LCD_vidWriteNumber(RTC_BCD2DEC(rtc.u8Minutes));
+		LCD_vidGoToXY(LCD_XPOS_SHIFT+LCD_XPOS2,LCD_YPOS0);
+		LCD_vidWriteCharacter(':');
+		LCD_vidGoToXY(LCD_XPOS_SHIFT+LCD_XPOS0,LCD_YPOS0);
+		LCD_vidWriteNumber(RTC_BCD2DEC(rtc.u8Hours));
+		/*Check for alarm*/
+		if (u8AlarmFlag == DCLOCK_ALARM_SET)
+		{
+			if ((RTC_BCD2DEC(rtc.u8Hours) == u8HoursAlarm) && (RTC_BCD2DEC(rtc.u8Minutes) == u8MinutesAlarm))
+			{
+				DIO_vidTogglePin(DIO_PORTA,DIO_PIN3);
+			}
 		}
 
 	}
