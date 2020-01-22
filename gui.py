@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from tkinter import *
+from tkinter.font import Font
 from datetime import datetime as dt
 import serial
 
@@ -21,17 +22,16 @@ def getTime():
 
 root = Tk()
 root.title("Time Setter")
-root.maxsize(800,150)
 
 photo = PhotoImage(file="Crystal_Clear_app_xclock.png")
 root.iconphoto(False,photo)
 
-actionsFrame = LabelFrame(root,text="Set current time",padx=5,pady=5)
-alarmFrame = LabelFrame(root,text="Set alarm",padx=5,pady=5)
+actionsFrame = LabelFrame(root,text="Set current time",padx=10,pady=5)
+alarmFrame = LabelFrame(root,text="Set alarm",padx=10,pady=5)
 
 #Alarm spinboxes
-hoursSpin = Spinbox(alarmFrame,from_=0,to=23)
-minutesSpin = Spinbox(alarmFrame,from_=0,to=59)
+hoursSpin = Spinbox(alarmFrame,from_=0,to=23,font=Font(size=14))
+minutesSpin = Spinbox(alarmFrame,from_=0,to=59,font=Font(size=14))
 statusLabel = Label(root,text="",relief=SUNKEN,anchor=W)
 getButton = Button(actionsFrame,text="Get current time",command=getTime)
 
@@ -59,36 +59,43 @@ def setAlarm():
     global hoursAlarm, minutesAlarm
     hoursAlarm = hoursSpin.get()
     minutesAlarm = minutesSpin.get()
-    statusLabel['text'] = str(hoursAlarm) + ':' + str(minutesAlarm)
-    #sending hours and minutes of alarm via UART
-    try:
-        ser.write(b'a')
-        ser.write(int(hoursAlarm).to_bytes(1,'little'))
-        ser.write(int(minutesAlarm).to_bytes(1,'little'))
-        ser.write(b'q')
-        statusLabel['text'] = "Alarm sent!"
-    except:
-        statusLabel['text'] = "Error sending alarm"
+    #Checking entered values
+    if (int(hoursAlarm) > 23 or int(minutesAlarm) > 59):
+        statusLabel['text'] = "Invalid alarm values entered"
+    else:
+        statusLabel['text'] = str(hoursAlarm) + ':' + str(minutesAlarm)
+        #sending hours and minutes of alarm via UART
+        try:
+            ser.write(b'a')
+            ser.write(int(hoursAlarm).to_bytes(1,'little'))
+            ser.write(int(minutesAlarm).to_bytes(1,'little'))
+            ser.write(b'q')
+            statusLabel['text'] = "Alarm sent!"
+        except:
+            statusLabel['text'] = "Error sending alarm"
 
 def clearAlarm():
-    ser.write(b'u')
-    ser.write(b'u')
-    ser.write(b'u')
-    ser.write(b'u')
+    try:
+        ser.write(b'u')
+        ser.write(b'u')
+        ser.write(b'u')
+        ser.write(b'u')
+    except:
+        statusLabel['text'] = "Clear alarm signal failed"
 
-clearAlarmButton = Button(alarmFrame,text="Clear alarm",command=clearAlarm)
+clearAlarmButton = Button(alarmFrame,text="Clear alarm",command=clearAlarm,justify="center")
 
 sendButton = Button(actionsFrame,text="Send time!",command=sendTime)
-setAlarmButton = Button(alarmFrame,text="Set alarm!",command=setAlarm,relief=RAISED)
+setAlarmButton = Button(alarmFrame,text="Set alarm!",command=setAlarm,relief=RAISED,justify="center")
 
-actionsFrame.grid(row=0,column=0)
-alarmFrame.grid(row=0,column=2)
+actionsFrame.grid(row=0,column=0,padx=5,pady=5)
+alarmFrame.grid(row=0,column=1,padx=10,pady=5)
 getButton.grid(row=0,column=1,sticky=W)
-sendButton.grid(row=0,column=2,sticky=W)
-hoursSpin.grid(row=0,column=0,sticky=W)
-minutesSpin.grid(row=0,column=1,sticky=W)
-setAlarmButton.grid(row=0,column=2,sticky=W)
-clearAlarmButton.grid(row=1,column=2,sticky=W)
-statusLabel.grid(row=1,column=0,columnspan=5,sticky=W+E)
+sendButton.grid(row=0,column=2,sticky=W+E)
+hoursSpin.grid(row=0,column=0,padx=3)
+minutesSpin.grid(row=0,column=1,padx=3)
+setAlarmButton.grid(row=1,column=0,sticky=W,pady=5)
+clearAlarmButton.grid(row=1,column=1,sticky=W,pady=5)
+statusLabel.grid(row=1,column=0,columnspan=5,sticky=W+E,padx=5)
 
 root.mainloop()
