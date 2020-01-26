@@ -127,7 +127,14 @@ void LCD_vidWriteNumber(u16 u16NumberCpy) {
 			LCD_vidWriteCharacter(u16NumberCpy%10+'0');
 		}
 		else if (u16NumberCpy < 1000) {
-			LCD_vidWriteCharacter(u16NumberCpy/100+'0');
+			LCD_vidWriteCharacter((u16NumberCpy/100)+'0');
+			LCD_vidWriteCharacter((u16NumberCpy%100)/10+'0');
+			LCD_vidWriteCharacter((u16NumberCpy%100)%10+'0');
+		}
+		else if (u16NumberCpy < 10000)
+		{
+			LCD_vidWriteCharacter((u16NumberCpy/1000)+'0');
+			LCD_vidWriteCharacter((u16NumberCpy%1000)/100+'0');
 			LCD_vidWriteCharacter((u16NumberCpy%100)/10+'0');
 			LCD_vidWriteCharacter((u16NumberCpy%100)%10+'0');
 		}

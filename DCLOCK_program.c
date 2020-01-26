@@ -16,6 +16,8 @@ RTC_t rtc;
 volatile u8 u8TimeArray[4];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
 
+u8 * u8DaysOfWeek_Arr[7] = {"Sun","Mon","Tues","Wed","Thu","Fri","Sat"};
+
 /*Checking alarm flag when microcontroller is reset*/
 void DCLOCK_vidCheckAlarmFlag(void)
 {
@@ -65,6 +67,19 @@ void DCLOCK_vidGetTime(void)
 			EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_ADDRESS,DCLOCK_ALARM_SET);
 
 		}
+		/*Set date*/
+		else if (u8TimeArray[0] == 'd')
+		{
+			rtc.u8Days = RTC_DEC2BCD(u8TimeArray[1]);
+			rtc.u8Months = RTC_DEC2BCD(u8TimeArray[2]);
+			rtc.u8Years = RTC_DEC2BCD(u8TimeArray[3]);
+			RTC_vidSetDate(&rtc);
+		}
+		else if (u8TimeArray[0] == 'w')
+		{
+			rtc.u8DayOfWeek = RTC_DEC2BCD(u8TimeArray[1]);
+			RTC_vidSetDayOfWeek(&rtc);
+		}
 		else if (u8TimeArray[0] == 'u')
 		{
 			DCLOCK_vidClearAlarmFlag();
@@ -79,6 +94,7 @@ void DCLOCK_vidCountOneSecond(void)
 	if (u32CountTime == 31500)
 	{
 		u32CountTime = 0;	
+		/*Show time*/
 		LCD_vidSendCommand(LCD_RETURN_HOME);
 		RTC_vidGetTime(&rtc);
 		LCD_vidGoToXY(LCD_XPOS_SHIFT+LCD_XPOS6,LCD_YPOS0);
@@ -91,6 +107,16 @@ void DCLOCK_vidCountOneSecond(void)
 		LCD_vidWriteCharacter(':');
 		LCD_vidGoToXY(LCD_XPOS_SHIFT+LCD_XPOS0,LCD_YPOS0);
 		LCD_vidWriteNumber(RTC_BCD2DEC(rtc.u8Hours));
+		/*Show date*/
+		LCD_vidGoToXY(LCD_XPOS0+5,LCD_YPOS2);
+		RTC_vidGetDate(&rtc);
+		LCD_vidWriteNumber(RTC_BCD2DEC(rtc.u8Days));
+		LCD_vidWriteCharacter(':');
+		LCD_vidWriteNumber(RTC_BCD2DEC(rtc.u8Months));
+		LCD_vidWriteCharacter(':');
+		LCD_vidWriteNumber(RTC_BCD2DEC(rtc.u8Years)+2000);
+		LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS2);
+		LCD_vidWriteString(u8DaysOfWeek_Arr[RTC_BCD2DEC(rtc.u8DayOfWeek)]);
 		/*Check for alarm*/
 		if (u8AlarmFlag == DCLOCK_ALARM_SET)
 		{
@@ -102,3 +128,4 @@ void DCLOCK_vidCountOneSecond(void)
 
 	}
 }
+
