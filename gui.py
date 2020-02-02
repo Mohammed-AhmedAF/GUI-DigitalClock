@@ -115,16 +115,28 @@ def clearAlarm():
     except:
         statusLabel['text'] = "Clear alarm signal failed"
 
+def sendReset():
+    try:
+        ser.write(b'r')
+        ser.write(b'r')
+        ser.write(b'r')
+        ser.write(b'r')
+        statusLabel['text'] = "Reset signal sent"
+    except:
+        statusLabel['text'] = "Reset signal failed"
 
 clearAlarmButton = Button(alarmFrame,text="Clear alarm",command=clearAlarm,justify="center")
 
 sendButton = Button(actionsFrame,text="Send time!",command=sendTime)
 setAlarmButton = Button(alarmFrame,text="Set alarm!",command=setAlarm,relief=RAISED,justify="center")
 
+resetBtn = Button(actionsFrame,text="Reset system!",command=sendReset)
+
 actionsFrame.grid(row=0,column=0,padx=5,pady=5)
 alarmFrame.grid(row=0,column=1,padx=10,pady=5)
 getButton.grid(row=0,column=1,sticky=W)
 sendButton.grid(row=0,column=2,sticky=W+E)
+resetBtn.grid(row=1,column=0,sticky=W+E)
 sendDateBtn.grid(row=0,column=0,sticky=W+E)
 hoursSpin.grid(row=0,column=0,padx=3)
 minutesSpin.grid(row=0,column=1,padx=3)

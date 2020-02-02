@@ -18,10 +18,17 @@ volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
 
 u8 * u8DaysOfWeek_Arr[7] = {"Mon","Tues","Wed","Thu","Fri","Sat","Sun"};
 
+/*Declaring alarm values struct*/
+strctAlarm_t strctAlarm;
+
 /*Checking alarm flag when microcontroller is reset*/
 void DCLOCK_vidCheckAlarmFlag(void)
 {
 	u8AlarmFlag = EEPROM_INTERNAL_u8ReadByte(DCLOCK_ALARM_ADDRESS);
+	if (u8AlarmFlag == DCLOCK_ALARM_SET) 
+	{
+		DCLOCK_vidRetrieveAlarmValues(&strctAlarm);
+	}
 }
 
 /*Alarm is cleared by a command from GUI application*/
@@ -61,10 +68,13 @@ void DCLOCK_vidGetTime(void)
 			LCD_vidGoToXY(LCD_XPOS3+LCD_XPOS_SHIFT,LCD_YPOS1);
 			LCD_vidWriteNumber(u8TimeArray[2]);
 			/*Store in alarm variables*/
-			u8HoursAlarm = u8TimeArray[1];
-			u8MinutesAlarm = u8TimeArray[2];
+			strctAlarm.u8Hour = u8TimeArray[1];
+			strctAlarm.u8Minute = u8TimeArray[2];
 			u8AlarmFlag = DCLOCK_ALARM_SET;
 			EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_ADDRESS,DCLOCK_ALARM_SET);
+			/*Store alarm values in EEPROM, to retrieve them if system
+			 *is reset before alarm is cleared */
+			DCLOCK_vidStoreAlarmValues(&strctAlarm);
 
 		}
 		/*Set date*/
@@ -86,6 +96,10 @@ void DCLOCK_vidGetTime(void)
 		else if (u8TimeArray[0] == 'u')
 		{
 			DCLOCK_vidClearAlarmFlag();
+		}
+		else if (u8TimeArray[0] == 'r')
+		{
+			DCLOCK_vidResetSystem();
 		}
 
 	}
@@ -125,7 +139,7 @@ void DCLOCK_vidCountOneSecond(void)
 		/*Check for alarm*/
 		if (u8AlarmFlag == DCLOCK_ALARM_SET)
 		{
-			if ((RTC_BCD2DEC(rtc.u8Hours) == u8HoursAlarm) && (RTC_BCD2DEC(rtc.u8Minutes) == u8MinutesAlarm))
+			if ((RTC_BCD2DEC(rtc.u8Hours) == strctAlarm.u8Hour) && (RTC_BCD2DEC(rtc.u8Minutes) == strctAlarm.u8Minute))
 			{
 				DIO_vidTogglePin(DIO_PORTA,DIO_PIN3);
 			}
@@ -134,3 +148,22 @@ void DCLOCK_vidCountOneSecond(void)
 	}
 }
 
+
+void DCLOCK_vidStoreAlarmValues(strctAlarm_t * ptStrctAlarm) 
+{
+	EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_HOUR_ADDRESS,ptStrctAlarm->u8Hour);
+	EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_MINUTE_ADDRESS,ptStrctAlarm->u8Minute);
+}
+
+void DCLOCK_vidRetrieveAlarmValues(strctAlarm_t * ptStrctAlarm) 
+{
+	ptStrctAlarm->u8Hour = EEPROM_INTERNAL_u8ReadByte(DCLOCK_ALARM_HOUR_ADDRESS);
+	ptStrctAlarm->u8Minute = EEPROM_INTERNAL_u8ReadByte(DCLOCK_ALARM_MINUTE_ADDRESS);
+
+}
+
+/*Reset system: just clear the screen*/
+void DCLOCK_vidResetSystem(void)
+{
+	LCD_vidSendCommand(LCD_CLEAR_SCREEN);
+}
