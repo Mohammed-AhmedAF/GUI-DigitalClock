@@ -43,7 +43,7 @@ void DCLOCK_vidClearAlarmFlag(void)
 	u8AlarmFlag = DCLOCK_ALARM_CLEARED;
 	EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_ADDRESS,u8AlarmFlag);
 	/*Clear displayed alarm from the screen*/
-	LCD_vidSendCommand(LCD_CLEAR_SCREEN);
+	LCD_vidClearLine(LCD_YPOS1);
 }
 
 void DCLOCK_vidGetTime(void)

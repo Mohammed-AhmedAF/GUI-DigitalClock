@@ -74,4 +74,5 @@ void LCD_vidWriteSizedString(s8*,u8);
 void LCD_vidGoToXY(u8,u8);
 void LCD_vidWriteNumber(u16);
 void LCD_vidWriteInPlace(u8,u8,u8);
+void LCD_vidClearLine(u8);
 #endif
