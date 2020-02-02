@@ -10,8 +10,6 @@
 volatile u32 u32CountTime;
 volatile u8 u8index = 0;
 volatile u8 u8Byte;
-u8 u8HoursAlarm;
-u8 u8MinutesAlarm;
 RTC_t rtc;
 volatile u8 u8TimeArray[4];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
@@ -28,6 +26,14 @@ void DCLOCK_vidCheckAlarmFlag(void)
 	if (u8AlarmFlag == DCLOCK_ALARM_SET) 
 	{
 		DCLOCK_vidRetrieveAlarmValues(&strctAlarm);
+			LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS1);
+			LCD_vidWriteString("Alarm:");
+			LCD_vidGoToXY(LCD_XPOS0+LCD_XPOS_SHIFT,LCD_YPOS1);
+			LCD_vidWriteNumber(strctAlarm.u8Hour);
+			LCD_vidGoToXY(LCD_XPOS2+LCD_XPOS_SHIFT,LCD_YPOS1);
+			LCD_vidWriteCharacter(':');
+			LCD_vidGoToXY(LCD_XPOS3+LCD_XPOS_SHIFT,LCD_YPOS1);
+			LCD_vidWriteNumber(strctAlarm.u8Minute);
 	}
 }
 

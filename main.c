@@ -35,7 +35,6 @@ void main(void)
 	/*After reset, check alarm flag in case the alarm was set and the microcontroller
 	 * has been reset afterwards before the alarm was cleared*/
 	DCLOCK_vidCheckAlarmFlag();
-	LCD_vidSendCommand(LCD_CLEAR_SCREEN);
 	while(1) {			
 	}
 }
