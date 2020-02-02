@@ -51,9 +51,9 @@ def sendDayOfWeek():
     try:
         ser.write(b'w')
         ser.write(dt.now().weekday().to_bytes(1,'little'))
-        ser.write(b'w')
-        ser.write(b'w')
-        ser.write(b'w')
+        ser.write(dt.now().weekday().to_bytes(1,'little'))
+        ser.write(dt.now().weekday().to_bytes(1,'little'))
+        ser.write(dt.now().weekday().to_bytes(1,'little'))
         statusLabel['text'] = "Day is " + str(dt.now().weekday())
     except:
         statusLabel['text'] = "Error sending day of the week"
