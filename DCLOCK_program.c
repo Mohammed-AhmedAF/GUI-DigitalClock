@@ -11,7 +11,7 @@ volatile u32 u32CountTime;
 volatile u8 u8index = 0;
 volatile u8 u8Byte;
 RTC_t rtc;
-volatile u8 u8TimeArray[4];
+volatile u8 u8MessageArray[4];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
 
 u8 * u8DaysOfWeek_Arr[7] = {"Mon","Tues","Wed","Thu","Fri","Sat","Sun"};
@@ -26,14 +26,14 @@ void DCLOCK_vidCheckAlarmFlag(void)
 	if (u8AlarmFlag == DCLOCK_ALARM_SET) 
 	{
 		DCLOCK_vidRetrieveAlarmValues(&strctAlarm);
-			LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS1);
-			LCD_vidWriteString("Alarm:");
-			LCD_vidGoToXY(LCD_XPOS0+LCD_XPOS_SHIFT,LCD_YPOS1);
-			LCD_vidWriteNumber(strctAlarm.u8Hour);
-			LCD_vidGoToXY(LCD_XPOS2+LCD_XPOS_SHIFT,LCD_YPOS1);
-			LCD_vidWriteCharacter(':');
-			LCD_vidGoToXY(LCD_XPOS3+LCD_XPOS_SHIFT,LCD_YPOS1);
-			LCD_vidWriteNumber(strctAlarm.u8Minute);
+		LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS1);
+		LCD_vidWriteString("Alarm:");
+		LCD_vidGoToXY(LCD_XPOS0+LCD_XPOS_SHIFT,LCD_YPOS1);
+		LCD_vidWriteNumber(strctAlarm.u8Hour);
+		LCD_vidGoToXY(LCD_XPOS2+LCD_XPOS_SHIFT,LCD_YPOS1);
+		LCD_vidWriteCharacter(':');
+		LCD_vidGoToXY(LCD_XPOS3+LCD_XPOS_SHIFT,LCD_YPOS1);
+		LCD_vidWriteNumber(strctAlarm.u8Minute);
 	}
 }
 
@@ -50,32 +50,32 @@ void DCLOCK_vidGetTime(void)
 {
 
 	u8Byte = UART_u8GetReceivedByte();
-	u8TimeArray[u8index] = u8Byte;
+	u8MessageArray[u8index] = u8Byte;
 	u8index++;
 	if (u8index == 4)
 	{
 		u8index = 0;
-		if (u8TimeArray[0] == 'c')
+		if (u8MessageArray[0] == 'c')
 		{
-			rtc.u8Seconds = RTC_DEC2BCD(u8TimeArray[3]);
-			rtc.u8Minutes = RTC_DEC2BCD(u8TimeArray[2]);
-			rtc.u8Hours = RTC_DEC2BCD(u8TimeArray[1]);
+			rtc.u8Seconds = RTC_DEC2BCD(u8MessageArray[3]);
+			rtc.u8Minutes = RTC_DEC2BCD(u8MessageArray[2]);
+			rtc.u8Hours = RTC_DEC2BCD(u8MessageArray[1]);
 			RTC_vidSetTime(&rtc);
 	
 		}
-		else if (u8TimeArray[0] == 'a')
+		else if (u8MessageArray[0] == 'a')
 		{
+			/*Store in alarm variables*/
+			strctAlarm.u8Hour = u8MessageArray[1];
+			strctAlarm.u8Minute = u8MessageArray[2];
 			LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS1);
 			LCD_vidWriteString("Alarm:");
 			LCD_vidGoToXY(LCD_XPOS0+LCD_XPOS_SHIFT,LCD_YPOS1);
-			LCD_vidWriteNumber(u8TimeArray[1]);
+			LCD_vidWriteNumber(strctAlarm.u8Hour);
 			LCD_vidGoToXY(LCD_XPOS2+LCD_XPOS_SHIFT,LCD_YPOS1);
 			LCD_vidWriteCharacter(':');
 			LCD_vidGoToXY(LCD_XPOS3+LCD_XPOS_SHIFT,LCD_YPOS1);
-			LCD_vidWriteNumber(u8TimeArray[2]);
-			/*Store in alarm variables*/
-			strctAlarm.u8Hour = u8TimeArray[1];
-			strctAlarm.u8Minute = u8TimeArray[2];
+			LCD_vidWriteNumber(strctAlarm.u8Minute);
 			u8AlarmFlag = DCLOCK_ALARM_SET;
 			EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_ADDRESS,DCLOCK_ALARM_SET);
 			/*Store alarm values in EEPROM, to retrieve them if system
@@ -84,26 +84,26 @@ void DCLOCK_vidGetTime(void)
 
 		}
 		/*Set date*/
-		else if (u8TimeArray[0] == 'd')
+		else if (u8MessageArray[0] == 'd')
 		{
-			rtc.u8Days = RTC_DEC2BCD(u8TimeArray[1]);
-			rtc.u8Months = RTC_DEC2BCD(u8TimeArray[2]);
-			rtc.u8Years = RTC_DEC2BCD(u8TimeArray[3]);
+			rtc.u8Days = RTC_DEC2BCD(u8MessageArray[1]);
+			rtc.u8Months = RTC_DEC2BCD(u8MessageArray[2]);
+			rtc.u8Years = RTC_DEC2BCD(u8MessageArray[3]);
 			RTC_vidSetDate(&rtc);
 		}
-		else if (u8TimeArray[0] == 'w')
+		else if (u8MessageArray[0] == 'w')
 		{
 			LCD_vidSendCommand(LCD_CLEAR_SCREEN);
-			rtc.u8DayOfWeek = RTC_DEC2BCD(u8TimeArray[1]);
-			rtc.u8DayOfWeek = RTC_DEC2BCD(u8TimeArray[2]);
-			rtc.u8DayOfWeek = RTC_DEC2BCD(u8TimeArray[3]);
+			rtc.u8DayOfWeek = RTC_DEC2BCD(u8MessageArray[1]);
+			rtc.u8DayOfWeek = RTC_DEC2BCD(u8MessageArray[2]);
+			rtc.u8DayOfWeek = RTC_DEC2BCD(u8MessageArray[3]);
 			RTC_vidSetDayOfWeek(&rtc);
 		}
-		else if (u8TimeArray[0] == 'u')
+		else if (u8MessageArray[0] == 'u')
 		{
 			DCLOCK_vidClearAlarmFlag();
 		}
-		else if (u8TimeArray[0] == 'r')
+		else if (u8MessageArray[0] == 'r')
 		{
 			DCLOCK_vidResetSystem();
 		}
