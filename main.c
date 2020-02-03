@@ -30,6 +30,7 @@ void main(void)
 
 	INTERRUPTS_vidSetGlobalInterruptFlag();
 
+	/*Pin used when alarm event is active*/
 	DIO_vidSetPinDirection(DIO_PORTA,DIO_PIN3,DIO_OUTPUT);
 
 	/*After reset, check alarm flag in case the alarm was set and the microcontroller
