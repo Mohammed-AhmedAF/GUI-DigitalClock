@@ -172,4 +172,6 @@ void DCLOCK_vidRetrieveAlarmValues(strctAlarm_t * ptStrctAlarm)
 void DCLOCK_vidResetSystem(void)
 {
 	LCD_vidSendCommand(LCD_CLEAR_SCREEN);
+	/*Displaying alarm notification if alarm is set*/
+	DCLOCK_vidCheckAlarmFlag();
 }
