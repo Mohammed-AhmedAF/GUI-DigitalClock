@@ -52,7 +52,7 @@ void DCLOCK_vidGetTime(void)
 	u8Byte = UART_u8GetReceivedByte();
 	u8MessageArray[u8index] = u8Byte;
 	u8index++;
-	if (u8index == 4)
+	if (u8index == DCLOCK_MESSAGESIZE)
 	{
 		u8index = 0;
 		if (u8MessageArray[0] == 'c')
@@ -95,14 +95,14 @@ void DCLOCK_vidGetTime(void)
 		{
 			LCD_vidSendCommand(LCD_CLEAR_SCREEN);
 			rtc.u8DayOfWeek = RTC_DEC2BCD(u8MessageArray[1]);
-			rtc.u8DayOfWeek = RTC_DEC2BCD(u8MessageArray[2]);
-			rtc.u8DayOfWeek = RTC_DEC2BCD(u8MessageArray[3]);
 			RTC_vidSetDayOfWeek(&rtc);
 		}
+		/*Clear alarm*/
 		else if (u8MessageArray[0] == 'u')
 		{
 			DCLOCK_vidClearAlarmFlag();
 		}
+		/*Clear screen*/
 		else if (u8MessageArray[0] == 'r')
 		{
 			DCLOCK_vidResetSystem();
@@ -148,6 +148,12 @@ void DCLOCK_vidCountOneSecond(void)
 			if ((RTC_BCD2DEC(rtc.u8Hours) == strctAlarm.u8Hour) && (RTC_BCD2DEC(rtc.u8Minutes) == strctAlarm.u8Minute))
 			{
 				DIO_vidTogglePin(DIO_PORTA,DIO_PIN3);
+			}
+			/*Handling the case of when the alarm should be cleared by software, not user input*/
+			/*The following condition clears the alarm flag after 1 minute*/
+			else if ((RTC_BCD2DEC(rtc.u8Hours) == strctAlarm.u8Hour) && (RTC_BCD2DEC(rtc.u8Minutes) > strctAlarm.u8Minute))
+			{
+				DCLOCK_vidClearAlarmFlag();
 			}
 		}
 

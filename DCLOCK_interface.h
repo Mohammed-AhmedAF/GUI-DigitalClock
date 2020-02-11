@@ -19,5 +19,6 @@ void DCLOCK_vidResetSystem(void);
 #define DCLOCK_ALARM_CLEARED 0
 #define DCLOCK_ALARM_HOUR_ADDRESS 0
 #define DCLOCK_ALARM_MINUTE_ADDRESS 1
+#define DCLOCK_MESSAGESIZE 4
 
 #endif
