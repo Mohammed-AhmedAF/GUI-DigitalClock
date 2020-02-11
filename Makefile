@@ -8,7 +8,7 @@
 
 MAIN = main.c
 CC = avr-gcc
-SRC = $(MAIN) DIO_program.c TIMER0_program.c LCD_program.c UART_program.c INTERRUPTS_program.c RTC_program.c TWI_program.c EEPROM_INTERNAL_program.c DCLOCK_program.c
+SRC = *.c
 MICROCNTRL = atmega32
 CFLAGS = -mmcu=$(MICROCNTRL) -I . -O3
 
