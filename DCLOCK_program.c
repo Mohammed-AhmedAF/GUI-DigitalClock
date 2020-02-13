@@ -11,7 +11,7 @@ volatile u32 u32CountTime;
 volatile u8 u8index = 0;
 volatile u8 u8Byte;
 RTC_t rtc;
-volatile u8 u8MessageArray[4];
+volatile u8 u8MessageArray[DCLOCK_MESSAGESIZE];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
 
 u8 * u8DaysOfWeek_Arr[7] = {"Mon","Tues","Wed","Thu","Fri","Sat","Sun"};
@@ -46,6 +46,7 @@ void DCLOCK_vidClearAlarmFlag(void)
 	LCD_vidClearLine(LCD_YPOS1);
 }
 
+/*Called when UART receive interrupt event happens*/
 void DCLOCK_vidGetTime(void)
 {
 
@@ -111,6 +112,7 @@ void DCLOCK_vidGetTime(void)
 	}
 }
 
+/*Called when timer overflow interrupt event happens*/
 void DCLOCK_vidCountOneSecond(void)
 {
 	u32CountTime++;
