@@ -7,7 +7,7 @@ typedef struct {
 } strctAlarm_t;
 
 void DCLOCK_vidCheckAlarmFlag(void);
-void DCLOCK_vidClearAlarmFlag(void);
+static void DCLOCK_vidClearAlarmFlag(void);
 void DCLOCK_vidGetTime(void);
 void DCLOCK_vidCountOneSecond(void);
 void DCLOCK_vidStoreAlarmValues(strctAlarm_t *);

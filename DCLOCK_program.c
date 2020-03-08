@@ -38,7 +38,7 @@ void DCLOCK_vidCheckAlarmFlag(void)
 }
 
 /*Alarm is cleared by a command from GUI application*/
-void DCLOCK_vidClearAlarmFlag(void)
+static void DCLOCK_vidClearAlarmFlag(void)
 {
 	u8AlarmFlag = DCLOCK_ALARM_CLEARED;
 	EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_ADDRESS,u8AlarmFlag);
