@@ -17,7 +17,10 @@
 #include "LCD_interface.h"
 #include <util/delay.h>
 
-
+/**
+ * \brief initializes LCD
+ *
+ */
 void LCD_vidInit(void) {
 	DIO_vidSetPinDirection(LCD_DATA_PORT,LCD_D0,DIO_OUTPUT);
 	DIO_vidSetPinDirection(LCD_DATA_PORT,LCD_D1,DIO_OUTPUT);
