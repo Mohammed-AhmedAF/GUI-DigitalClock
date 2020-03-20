@@ -47,6 +47,12 @@ static void DCLOCK_vidClearAlarmFlag(void)
 }
 
 /*Called when UART receive interrupt event happens*/
+/**
+ * @breif Called by UART receive interrupt.
+ *
+ *
+ */
+
 void DCLOCK_vidGetTime(void)
 {
 
@@ -163,6 +169,10 @@ void DCLOCK_vidCountOneSecond(void)
 }
 
 
+/**
+ * @breif Stores hours and minutes of alarm into internal EEPROM.
+ *
+ */
 void DCLOCK_vidStoreAlarmValues(strctAlarm_t * ptStrctAlarm) 
 {
 	EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_HOUR_ADDRESS,ptStrctAlarm->u8Hour);
@@ -176,7 +186,11 @@ void DCLOCK_vidRetrieveAlarmValues(strctAlarm_t * ptStrctAlarm)
 
 }
 
-/*Reset system: just clear the screen*/
+/*
+ * @breif Reset system: just clear the screen
+ * @detail Resets the system
+ * */
+
 void DCLOCK_vidResetSystem(void)
 {
 	LCD_vidSendCommand(LCD_CLEAR_SCREEN);
