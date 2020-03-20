@@ -18,7 +18,7 @@
 #include <util/delay.h>
 
 /**
- * \brief initializes LCD
+ * @brief initializes LCD
  *
  */
 void LCD_vidInit(void) {
@@ -44,6 +44,11 @@ void LCD_vidInit(void) {
 
 }
 
+/**
+ * @breif Sends command to LCD.
+ * @param commandCpy Commanad to be sent.
+ * @return void
+ */
 void LCD_vidSendCommand(u8 commandCpy) {
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_RS,STD_LOW);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_RW,STD_LOW);
