@@ -179,6 +179,12 @@ void DCLOCK_vidStoreAlarmValues(strctAlarm_t * ptStrctAlarm)
 	EEPROM_INTERNAL_vidWriteByte(DCLOCK_ALARM_MINUTE_ADDRESS,ptStrctAlarm->u8Minute);
 }
 
+/*
+ * @breif Retreives alarm values(minutes, hours), normally after system reset.
+ * @param ptStrctAlarm pointer to struct holding minutes and hours.
+ *
+ */
+
 void DCLOCK_vidRetrieveAlarmValues(strctAlarm_t * ptStrctAlarm) 
 {
 	ptStrctAlarm->u8Hour = EEPROM_INTERNAL_u8ReadByte(DCLOCK_ALARM_HOUR_ADDRESS);
