@@ -9,7 +9,7 @@ A digital clock using ATMega16 and DS-1307 RTC that is set using a UART connecti
 * Clear LCD screen with GUI.
 
 ## How to compile?
-Just put the files of the project in one folder/directory, and then rung 'make build' from the command line.
+Just put the files of the project in one folder/directory, and then run `make build` from the command line.
 
 
 ![image](https://user-images.githubusercontent.com/4983318/73891770-a4ba3500-487d-11ea-98f2-499f5c0fce2e.png) 
