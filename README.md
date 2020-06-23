@@ -8,6 +8,9 @@ A digital clock using the AVR ATMega16 (or ATMega32) and DS-1307 RTC that is set
 * Set current current time, date and alarm via GUI application.
 * Clear LCD screen with GUI.
 
+## Notice
+The packages `python3-tk`, `pyserial` should be installed. tk is used to make the GUI and pyserial is used for UART communication by the GUI app.
+
 ## How to compile?
 Just put the files of the project in one folder/directory, and then run `make build` from the command line.
 
