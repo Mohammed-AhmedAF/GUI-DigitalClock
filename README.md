@@ -15,6 +15,6 @@ The packages `python3-tk`, `pyserial` should be installed. tk is used to make th
 Just put the files of the project in one folder/directory, and then run `make build` from the command line.
 
 
-![image](/gui.png) 
+![image](/gui_screenshot.png) 
 
 ![image](https://user-images.githubusercontent.com/4983317/73939388-04eabe80-48f2-11ea-918b-3a90808dafb3.jpg)
