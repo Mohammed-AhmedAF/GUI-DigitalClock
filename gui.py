@@ -125,12 +125,26 @@ def sendReset():
     except:
         statusLabel['text'] = "Reset signal failed"
 
+def connect():
+   #Establishing serial connection
+    global ser;
+    try:
+
+        ser = serial.Serial('/dev/ttyUSB0',9600)
+        statusLabel['text'] = "Connection established!"
+    except:
+        statusLabel['text'] = "Could not establish connection"
+        ser.close()
+
+
+
 clearAlarmButton = Button(alarmFrame,text="Clear alarm",command=clearAlarm,justify="center")
 
 sendButton = Button(actionsFrame,text="Send time!",command=sendTime)
 setAlarmButton = Button(alarmFrame,text="Set alarm!",command=setAlarm,relief=RAISED,justify="center")
 
 resetBtn = Button(actionsFrame,text="Reset system!",command=sendReset)
+connectBtn = Button(actionsFrame,text="Connect!",command=connect)
 
 actionsFrame.grid(row=0,column=0,padx=5,pady=5)
 alarmFrame.grid(row=0,column=1,padx=10,pady=5)
@@ -138,6 +152,7 @@ getButton.grid(row=0,column=1,sticky=W)
 sendButton.grid(row=0,column=2,sticky=W+E)
 resetBtn.grid(row=1,column=0,sticky=W+E)
 sendDateBtn.grid(row=0,column=0,sticky=W+E)
+connectBtn.grid(row=0,column=0,sticky=W+E)
 hoursSpin.grid(row=0,column=0,padx=3)
 minutesSpin.grid(row=0,column=1,padx=3)
 setAlarmButton.grid(row=1,column=0,sticky=W,pady=5)
