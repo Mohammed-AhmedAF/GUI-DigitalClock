@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import platform
 from tkinter import *
 from tkinter.font import Font
 from datetime import datetime as dt
@@ -16,6 +17,7 @@ yearsNow = 0
 
 time = "Test"
 
+
 def getTime():
     global hoursNow, minutesNow, secondsNow
     hoursNow = dt.now().hour
@@ -32,11 +34,13 @@ root.iconphoto(False,photo)
 
 actionsFrame = LabelFrame(root,text="Set current time",padx=10,pady=5)
 alarmFrame = LabelFrame(root,text="Set alarm",padx=10,pady=5)
+connectionFrame = LabelFrame(root,text="Connection",padx=10,pady=5)
 
 #Alarm spinboxes
 hoursSpin = Spinbox(alarmFrame,from_=0,to=23,font=Font(size=14))
 minutesSpin = Spinbox(alarmFrame,from_=0,to=59,font=Font(size=14))
 statusLabel = Label(root,text="",relief=SUNKEN,anchor=W)
+systemLabel = Label(root,text="",relief=SUNKEN,anchor=W)
 getButton = Button(actionsFrame,text="Get current time",command=getTime)
 
 #Establishing serial connection
@@ -102,7 +106,7 @@ def setAlarm():
             ser.write(int(hoursAlarm).to_bytes(1,'little'))
             ser.write(int(minutesAlarm).to_bytes(1,'little'))
             ser.write(b'q')
-            statusLabel['text'] = "Alarm sent!"
+            statusLabel['text'] = "Alarm sent"
         except:
             statusLabel['text'] = "Error sending alarm"
 
@@ -134,20 +138,26 @@ def connect():
         statusLabel['text'] = "Connection established!"
     except:
         statusLabel['text'] = "Could not establish connection"
-        ser.close()
+        try:
+            ser.close()
+        except:
+            statusLabel['text'] = "No connection handle"
 
+
+systemLabel['text'] = platform.system()
 
 
 clearAlarmButton = Button(alarmFrame,text="Clear alarm",command=clearAlarm,justify="center")
 
-sendButton = Button(actionsFrame,text="Send time!",command=sendTime)
-setAlarmButton = Button(alarmFrame,text="Set alarm!",command=setAlarm,relief=RAISED,justify="center")
+sendButton = Button(actionsFrame,text="Send time",command=sendTime)
+setAlarmButton = Button(alarmFrame,text="Set alarm",command=setAlarm,relief=RAISED,justify="center")
 
-resetBtn = Button(actionsFrame,text="Reset system!",command=sendReset)
-connectBtn = Button(actionsFrame,text="Connect!",command=connect)
+resetBtn = Button(actionsFrame,text="Reset system",command=sendReset)
+connectBtn = Button(connectionFrame,text="Connect",command=connect)
 
-actionsFrame.grid(row=0,column=0,padx=5,pady=5)
-alarmFrame.grid(row=0,column=1,padx=10,pady=5)
+actionsFrame.grid(row=1,column=0,padx=10,pady=5)
+alarmFrame.grid(row=1,column=1,padx=10,pady=5)
+connectionFrame.grid(row=1,column=4,padx=10,pady=5)
 getButton.grid(row=0,column=1,sticky=W)
 sendButton.grid(row=0,column=2,sticky=W+E)
 resetBtn.grid(row=1,column=0,sticky=W+E)
@@ -157,6 +167,7 @@ hoursSpin.grid(row=0,column=0,padx=3)
 minutesSpin.grid(row=0,column=1,padx=3)
 setAlarmButton.grid(row=1,column=0,sticky=W,pady=5)
 clearAlarmButton.grid(row=1,column=1,sticky=W,pady=5)
-statusLabel.grid(row=1,column=0,columnspan=5,sticky=W+E,padx=5)
+statusLabel.grid(row=2,column=0,columnspan=4,sticky=W+E,padx=5)
+systemLabel.grid(row=2,column=4,columnspan=3,sticky=W+E,padx=5)
 
 root.mainloop()
