@@ -30,11 +30,11 @@ def getTime():
 root = Tk()
 root.title("Time Setter")
 
-photo = PhotoImage(file="Crystal_Clear_app_xclock.png")
+photo = PhotoImage(file="images/Crystal_Clear_app_xclock.png")
 root.iconphoto(False,photo)
 
-actionsFrame = LabelFrame(root,text="Set current time",padx=10,pady=5)
-alarmFrame = LabelFrame(root,text="Set alarm",padx=10,pady=5)
+actionsFrame = LabelFrame(root,text="Set current time")
+alarmFrame = LabelFrame(root,text="Set alarm")
 connectionFrame = LabelFrame(root,text="Connection",padx=10,pady=5)
 
 #Alarm spinboxes
@@ -46,7 +46,7 @@ getButton = Button(actionsFrame,text="Get current time",command=getTime)
 
 #Establishing serial connection
 try:
-    ser = serial.Serial('/dev/ttyUSB0',9600)
+    ser = serial.Serial('/dev/ttyUSB0',baudrate.get())
     statusLabel['text'] = "Connection established!"
 except:
     statusLabel['text'] = "Connection could not be established"
@@ -135,8 +135,8 @@ def connect():
     global ser;
     try:
 
-        ser = serial.Serial('/dev/ttyUSB0',9600)
-        statusLabel['text'] = "Connection established!"
+        ser = serial.Serial('/dev/ttyUSB0',baudrate.get())
+        statusLabel['text'] = "Connection established!" + " Baudrate: "+str(baudrate.get())
     except:
         statusLabel['text'] = "Could not establish connection"
         try:
@@ -165,7 +165,7 @@ alarmFrame.grid(row=1,column=1,padx=10,pady=5,sticky=N+S)
 connectionFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S)
 getButton.grid(row=0,column=1,sticky=W)
 sendButton.grid(row=0,column=2,sticky=W+E)
-resetBtn.grid(row=1,column=0,sticky=W+E,pady=3)
+resetBtn.grid(row=1,column=0,columnspan=3,sticky=W+E,pady=3)
 sendDateBtn.grid(row=0,column=0,sticky=W+E)
 connectBtn.grid(row=0,column=0,sticky=W+E)
 baudrate.grid(row=1,column=0,sticky=W+E)
