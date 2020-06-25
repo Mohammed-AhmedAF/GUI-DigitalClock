@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import platform
 from tkinter import *
+from tkinter import ttk
 from tkinter.font import Font
 from datetime import datetime as dt
 import serial
@@ -153,16 +154,21 @@ sendButton = Button(actionsFrame,text="Send time",command=sendTime)
 setAlarmButton = Button(alarmFrame,text="Set alarm",command=setAlarm,relief=RAISED,justify="center")
 
 resetBtn = Button(actionsFrame,text="Reset system",command=sendReset)
-connectBtn = Button(connectionFrame,text="Connect",command=connect)
 
-actionsFrame.grid(row=1,column=0,padx=10,pady=5)
-alarmFrame.grid(row=1,column=1,padx=10,pady=5)
-connectionFrame.grid(row=1,column=4,padx=10,pady=5)
+connectBtn = Button(connectionFrame,text="Connect",command=connect)
+baudrate = ttk.Combobox(connectionFrame,width="20")
+baudrate['values'] = [9600,19200,38400,57600,115200]
+baudrate.current(0)
+
+actionsFrame.grid(row=1,column=0,padx=10,pady=5,sticky=N+S)
+alarmFrame.grid(row=1,column=1,padx=10,pady=5,sticky=N+S)
+connectionFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S)
 getButton.grid(row=0,column=1,sticky=W)
 sendButton.grid(row=0,column=2,sticky=W+E)
-resetBtn.grid(row=1,column=0,sticky=W+E)
+resetBtn.grid(row=1,column=0,sticky=W+E,pady=3)
 sendDateBtn.grid(row=0,column=0,sticky=W+E)
 connectBtn.grid(row=0,column=0,sticky=W+E)
+baudrate.grid(row=1,column=0,sticky=W+E)
 hoursSpin.grid(row=0,column=0,padx=3)
 minutesSpin.grid(row=0,column=1,padx=3)
 setAlarmButton.grid(row=1,column=0,sticky=W,pady=5)
@@ -170,4 +176,6 @@ clearAlarmButton.grid(row=1,column=1,sticky=W,pady=5)
 statusLabel.grid(row=2,column=0,columnspan=4,sticky=W+E,padx=5)
 systemLabel.grid(row=2,column=4,columnspan=3,sticky=W+E,padx=5)
 
+
 root.mainloop()
+
