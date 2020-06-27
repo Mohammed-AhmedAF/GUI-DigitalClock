@@ -144,7 +144,7 @@ def connect():
         serialPort = "/dev/ttyUSB0"
     #Checking if there is a connection already or establish connection
     if connectedFlag == 1:
-        statusLabel['text'] = "Already connected!"
+        statusLabel['text'] = "Already connected!" + " Baudrate: " + baudrate.get()
     else:
         try:
             ser = serial.Serial(serialPort,int(baudrate.get()))
