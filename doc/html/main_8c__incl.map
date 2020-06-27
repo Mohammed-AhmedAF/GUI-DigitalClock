@@ -1,0 +1,12 @@
+<map id="main.c" name="main.c">
+<area shape="rect" id="node2" href="$Std__Types_8h.html" title="Std_Types.h" alt="" coords="5,80,101,107"/>
+<area shape="rect" id="node3" href="$Macros_8h.html" title="Macros.h" alt="" coords="126,80,202,107"/>
+<area shape="rect" id="node4" href="$DIO__interface_8h.html" title="DIO_interface.h" alt="" coords="227,80,341,107"/>
+<area shape="rect" id="node5" href="$TIMER0__interface_8h.html" title="TIMER0_interface.h" alt="" coords="365,80,504,107"/>
+<area shape="rect" id="node6" href="$INTERRUPTS__interface_8h.html" title="INTERRUPTS_interface.h" alt="" coords="529,80,706,107"/>
+<area shape="rect" id="node7" href="$UART__interface_8h.html" title="UART_interface.h" alt="" coords="730,80,857,107"/>
+<area shape="rect" id="node8" href="$LCD__interface_8h.html" title="LCD_interface.h" alt="" coords="881,80,999,107"/>
+<area shape="rect" id="node9" href="$RTC__interface_8h.html" title="RTC_interface.h" alt="" coords="1022,80,1141,107"/>
+<area shape="rect" id="node10" href="$EEPROM__INTERNAL__interface_8h.html" title="EEPROM_INTERNAL_interface.h" alt="" coords="1165,80,1387,107"/>
+<area shape="rect" id="node11" href="$DCLOCK__interface_8h.html" title="DCLOCK_interface.h" alt="" coords="1412,80,1559,107"/>
+</map>

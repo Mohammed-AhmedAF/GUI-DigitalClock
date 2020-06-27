@@ -1,0 +1,9 @@
+<map id="EEPROM_INTERNAL_program.c" name="EEPROM_INTERNAL_program.c">
+<area shape="rect" id="node2" href="$SETTINGS__interface_8h.html" title="SETTINGS_interface.h" alt="" coords="5,80,163,107"/>
+<area shape="rect" id="node3" href="$Macros_8h.html" title="Macros.h" alt="" coords="187,80,263,107"/>
+<area shape="rect" id="node4" href="$Std__Types_8h.html" title="Std_Types.h" alt="" coords="288,80,384,107"/>
+<area shape="rect" id="node5" href="$DIO__interface_8h.html" title="DIO_interface.h" alt="" coords="408,80,523,107"/>
+<area shape="rect" id="node6" href="$INTERRUPTS__interface_8h.html" title="INTERRUPTS_interface.h" alt="" coords="547,80,725,107"/>
+<area shape="rect" id="node7" href="$EEPROM__INTERNAL__private_8h.html" title="EEPROM_INTERNAL_private.h" alt="" coords="749,80,960,107"/>
+<area shape="rect" id="node8" href="$EEPROM__INTERNAL__interface_8h.html" title="EEPROM_INTERNAL_interface.h" alt="" coords="983,80,1206,107"/>
+</map>
