@@ -7,6 +7,7 @@ A digital clock using the AVR ATMega16 (or ATMega32) and DS-1307 RTC that is set
 * When an alarm event happens, a pin is toggled for a minute. Then the alarm notification disappears from the LCD.
 * Set current current time, date and alarm via GUI application.
 * Clear LCD screen with GUI.
+* GUI is working on both Linux and Windows.
 
 ## Notice
 The packages `python3-tk`, `pyserial` should be installed. tk is used to make the GUI and pyserial is used for UART communication by the GUI app.
