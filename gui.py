@@ -16,6 +16,9 @@ daysNow = 0
 monthsNow = 0
 yearsNow = 0
 
+#Flag to check if UART is connected
+connectedFlag = 0
+
 time = "Test"
 
 
@@ -46,7 +49,7 @@ getButton = Button(actionsFrame,text="Get current time",command=getTime)
 
 #Establishing serial connection
 try:
-    ser = serial.Serial('/dev/ttyUSB0',baudrate.get())
+    ser = serial.Serial('COM4',int(baudrate.get()))
     statusLabel['text'] = "Connection established!"
 except:
     statusLabel['text'] = "Connection could not be established"
@@ -132,17 +135,28 @@ def sendReset():
 
 def connect():
    #Establishing serial connection
-    global ser;
-    try:
-
-        ser = serial.Serial('/dev/ttyUSB0',baudrate.get())
-        statusLabel['text'] = "Connection established!" + " Baudrate: "+str(baudrate.get())
-    except:
-        statusLabel['text'] = "Could not establish connection"
+    global ser
+    global connectedFlag
+    #Checking OS type
+    if (platform.system().startswith("Win")):
+        serialPort = "COM4"
+    else:
+        serialPort = "/dev/ttyUSB0"
+    #Checking if there is a connection already or establish connection
+    if connectedFlag == 1:
+        statusLabel['text'] = "Already connected!"
+    else:
         try:
-            ser.close()
+            ser = serial.Serial(serialPort,int(baudrate.get()))
+            statusLabel['text'] = "Connection established!" + " Baudrate: "+str(baudrate.get())
+            connectedFlag = 1
         except:
-            statusLabel['text'] = "No connection handle"
+            statusLabel['text'] = "Could not establish connection"
+            connectedFlag = 0
+            try:
+                ser.close()
+            except:
+                statusLabel['text'] = "No connection handle"
 
 
 systemLabel['text'] = platform.system()
