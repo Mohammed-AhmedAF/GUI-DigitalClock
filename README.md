@@ -1,6 +1,8 @@
 # GUI-DigitalClock
+## Summary
 A digital clock using the AVR ATMega16 (or ATMega32) and DS-1307 RTC that is set using a UART connection to computer, the time is got and sent using a GUI application. You can also set and clear an alarm using the GUI application.
 
+## Features
 * Display current time and date including day of the week.
 * Alarm functionality, and keeping the alarm in internal EEPROM.
 * Display a message that an alarm is set, even if the system is reset before the alarm event takes place.
