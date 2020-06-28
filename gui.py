@@ -5,6 +5,8 @@ from tkinter import ttk
 from tkinter.font import Font
 from datetime import datetime as dt
 import serial
+import requests
+import json
 
 #global variables
 whoursNow = 0
@@ -38,6 +40,7 @@ root.iconphoto(False,photo)
 
 actionsFrame = LabelFrame(root,text="Set current time")
 alarmFrame = LabelFrame(root,text="Set alarm")
+temperatureFrame = LabelFrame(root,text="Temperature")
 connectionFrame = LabelFrame(root,text="Connection",padx=10,pady=5)
 
 #Alarm spinboxes
@@ -174,9 +177,29 @@ baudrate = ttk.Combobox(connectionFrame,width="20")
 baudrate['values'] = [9600,19200,38400,57600,115200]
 baudrate.current(0)
 
+temperatureDisplay = Label(temperatureFrame,text="",anchor=W)
+def sendTemperature():
+    apiURL = "http://api.openweathermap.org/data/2.5/weather?q=Ismailia&appid=000ea0deb2c5a6f1cb107ca1353ea84d"
+    response = requests.get(apiURL)
+    x = response.json()
+    if x["cod"] != "404":
+        y = x["main"]
+        temperatureDisplay["text"] = str(int(y["temp"]-273.15)) + " Celsius"
+
+
+sendTemperatureBtn = Button(temperatureFrame,text="Get & send Temp.",command=sendTemperature)
+
+#Containers placement
 actionsFrame.grid(row=1,column=0,padx=10,pady=5,sticky=N+S)
 alarmFrame.grid(row=1,column=1,padx=10,pady=5,sticky=N+S)
-connectionFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S)
+temperatureFrame.grid(row=1,column=3,padx=10,pady=5,sticky=N+S)
+connectionFrame.grid(row=1,column=2,padx=10,pady=5,sticky=N+S)
+
+#Temperature elements
+temperatureDisplay.grid(row=0,column=0,padx=10,pady=5,sticky=N+S)
+sendTemperatureBtn.grid(row=1,column=0,padx=10,pady=5,sticky=N+S)
+
+#Time elements placements
 getButton.grid(row=0,column=1,sticky=W)
 sendButton.grid(row=0,column=2,sticky=W+E)
 resetBtn.grid(row=1,column=0,columnspan=3,sticky=W+E,pady=3)
@@ -187,8 +210,8 @@ hoursSpin.grid(row=0,column=0,padx=3)
 minutesSpin.grid(row=0,column=1,padx=3)
 setAlarmButton.grid(row=1,column=0,sticky=W,pady=5)
 clearAlarmButton.grid(row=1,column=1,sticky=W,pady=5)
-statusLabel.grid(row=2,column=0,columnspan=4,sticky=W+E,padx=5)
-systemLabel.grid(row=2,column=4,columnspan=3,sticky=W+E,padx=5)
+statusLabel.grid(row=2,column=0,columnspan=3,sticky=W+E,padx=5)
+systemLabel.grid(row=2,column=3,columnspan=3,sticky=W+E,padx=5)
 
 
 root.mainloop()
