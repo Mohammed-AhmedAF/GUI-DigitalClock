@@ -19,6 +19,7 @@ Just put the files of the project in one folder/directory, and then run `make bu
 
 ## Project status
 Having problems with sending alarm and temperature values to microcontroller. The transmission is broken or LCD doesn't update.
+Update: Never mind, it was a wiring issue!
 
 ## Screenshots
 ![image](/images/gui_screenshot.png) 
