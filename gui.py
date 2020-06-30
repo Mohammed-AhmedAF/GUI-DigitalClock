@@ -184,7 +184,17 @@ def sendTemperature():
     x = response.json()
     if x["cod"] != "404":
         y = x["main"]
-        temperatureDisplay["text"] = str(int(y["temp"]-273.15)) + " Celsius"
+        temperatureReceived = int(y["temp"] - 273.15)
+        temperatureDisplay["text"] = str(temperatureReceived) + " Celsius"
+        try:
+            ser.write(b't')
+            ser.write(int(int(temperatureReceived)).to_bytes(1,'little'));
+            ser.write(b't')
+            ser.write(b't')
+            statusLabel['text'] = "Temperature sent"
+        except:
+            statusLabel['text'] = "Temperature failed"
+
 
 
 sendTemperatureBtn = Button(temperatureFrame,text="Get & send Temp.",command=sendTemperature)
