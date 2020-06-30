@@ -10,6 +10,7 @@
 volatile u32 u32CountTime;
 volatile u8 u8index = 0;
 volatile u8 u8Byte;
+volatile u8 u8Temperature;
 RTC_t rtc;
 volatile u8 u8MessageArray[DCLOCK_MESSAGESIZE];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
@@ -75,6 +76,7 @@ void DCLOCK_vidGetTime(void)
 			/*Store in alarm variables*/
 			strctAlarm.u8Hour = u8MessageArray[1];
 			strctAlarm.u8Minute = u8MessageArray[2];
+			LCD_vidSendCommand(LCD_CLEAR_SCREEN);
 			LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS1);
 			LCD_vidWriteString("Alarm:");
 			LCD_vidGoToXY(LCD_XPOS0+LCD_XPOS_SHIFT,LCD_YPOS1);
@@ -113,6 +115,13 @@ void DCLOCK_vidGetTime(void)
 		else if (u8MessageArray[0] == 'r')
 		{
 			DCLOCK_vidResetSystem();
+		}
+		else if (u8MessageArray[0] == 't')
+		{
+			u8Temperature = u8MessageArray[1];
+			LCD_vidGoToXY(LCD_XPOS10,LCD_YPOS3);
+			LCD_vidWriteString("Temp.: ");
+			LCD_vidWriteNumber(u8Temperature);
 		}
 
 	}
