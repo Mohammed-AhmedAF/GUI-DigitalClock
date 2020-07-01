@@ -6,7 +6,7 @@
 #define _LCD_INTERFACE_H
 
 #define LCD_DATA_PORT DIO_PORTB
-#define LCD_CTRL_PORT DIO_PORTA
+#define LCD_CTRL_PORT DIO_PORTD
 
 #define LCD_D0 DIO_PIN0
 #define LCD_D1 DIO_PIN1
@@ -29,9 +29,9 @@
 
 #define LCD_MOVE_CURSOR_LEFT 0x14
 
-#define LCD_E DIO_PIN2
-#define LCD_RW DIO_PIN1
-#define LCD_RS DIO_PIN0
+#define LCD_E DIO_PIN4
+#define LCD_RW DIO_PIN3
+#define LCD_RS DIO_PIN2
 
 /*Macros defined to be used with the GoTOXY function*/
 #define LCD_XPOS0 0
