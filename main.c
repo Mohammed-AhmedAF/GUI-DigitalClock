@@ -8,6 +8,7 @@
 #include "RTC_interface.h"
 #include "EEPROM_INTERNAL_interface.h"
 #include "DCLOCK_interface.h"
+#include "SYSCNTRL_interface.h"
 
 void main(void)
 {
@@ -28,15 +29,17 @@ void main(void)
 	INTERRUPTS_vidEnableInterrupt(INTERRUPTS_TIMER0_OVF);
 	INTERRUPTS_vidPutISRFunction(INTERRUPTS_TIMER0_OVF,DCLOCK_vidCountOneSecond);
 
-	INTERRUPTS_vidSetGlobalInterruptFlag();
-
 	/*Pin used when alarm event is active*/
 	DIO_vidSetPinDirection(DIO_PORTA,DIO_PIN3,DIO_OUTPUT);
 
 	/*After reset, check alarm flag in case the alarm was set and the microcontroller
 	 * has been reset afterwards before the alarm was cleared*/
 	DCLOCK_vidCheckAlarmFlag();
+
+	INTERRUPTS_vidSetGlobalInterruptFlag();
 	while(1) {			
+		/*Putting the MCU in sleep mode*/
+		SYSCNTRL_vidEnableSleep(SYSCNTRL_SLEEPMODE_IDLE);		
 	}
 }
 
