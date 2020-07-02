@@ -22,7 +22,7 @@ void main(void)
 
 	INTERRUPTS_vidEnableInterrupt(INTERRUPTS_USART_RXC);
 	INTERRUPTS_vidPutISRFunction(INTERRUPTS_USART_RXC,DCLOCK_vidGetTime);
-	
+
 	/*Timer used to cause an interrupt every second to retrieve current time from RTC*/
 	TIMER0_vidInit(TIMER0_WGM_NORMAL,TIMER0_COM_NORMAL,TIMER0_CLK_1);
 
@@ -35,11 +35,10 @@ void main(void)
 	/*After reset, check alarm flag in case the alarm was set and the microcontroller
 	 * has been reset afterwards before the alarm was cleared*/
 	DCLOCK_vidCheckAlarmFlag();
-
 	INTERRUPTS_vidSetGlobalInterruptFlag();
 	while(1) {			
 		/*Putting the MCU in sleep mode*/
-		SYSCNTRL_vidEnableSleep(SYSCNTRL_SLEEPMODE_IDLE);		
+		SYSCNTRL_vidEnableSleep(SYSCNTRL_SLEEPMODE_IDLE);
 	}
 }
 

@@ -8,6 +8,7 @@ void SYSCNTRL_vidEnableSleep(u8 u8Mode)
 	switch(u8Mode)
 	{
 		case SYSCNTRL_SLEEPMODE_IDLE:
+		SET_BIT(MCUCR,SE);
 		CLEAR_BIT(MCUCR,SM0);
 		CLEAR_BIT(MCUCR,SM1);
 		CLEAR_BIT(MCUCR,SM2);
@@ -19,4 +20,6 @@ void SYSCNTRL_vidEnableSleep(u8 u8Mode)
 		break;
 
 	}
+
+	asm("SLEEP");
 }
