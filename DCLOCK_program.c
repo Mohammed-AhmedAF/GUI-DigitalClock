@@ -56,13 +56,15 @@ static void DCLOCK_vidClearAlarmFlag(void)
 
 void DCLOCK_vidGetTime(void)
 {
-
+	/*Get received bytes*/
 	u8Byte = UART_u8GetReceivedByte();
 	u8MessageArray[u8index] = u8Byte;
 	u8index++;
+	/*Check if the number of byte received equals the message size*/
 	if (u8index == DCLOCK_MESSAGESIZE)
 	{
 		u8index = 0;
+		/*Set time*/
 		if (u8MessageArray[0] == 'c')
 		{
 			rtc.u8Seconds = RTC_DEC2BCD(u8MessageArray[3]);
@@ -71,6 +73,7 @@ void DCLOCK_vidGetTime(void)
 			RTC_vidSetTime(&rtc);
 	
 		}
+		/*Set alarm*/
 		else if (u8MessageArray[0] == 'a')
 		{
 			/*Store in alarm variables*/
@@ -100,6 +103,7 @@ void DCLOCK_vidGetTime(void)
 			rtc.u8Years = RTC_DEC2BCD(u8MessageArray[3]);
 			RTC_vidSetDate(&rtc);
 		}
+		/*Set day of the week*/
 		else if (u8MessageArray[0] == 'w')
 		{
 			LCD_vidSendCommand(LCD_CLEAR_SCREEN);
@@ -116,6 +120,7 @@ void DCLOCK_vidGetTime(void)
 		{
 			DCLOCK_vidResetSystem();
 		}
+		/*Set temperature*/
 		else if (u8MessageArray[0] == 't')
 		{
 			u8Temperature = u8MessageArray[1];
