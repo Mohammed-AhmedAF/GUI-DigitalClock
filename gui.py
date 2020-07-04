@@ -173,7 +173,7 @@ setAlarmButton = Button(alarmFrame,text="Set alarm",command=setAlarm,relief=RAIS
 resetBtn = Button(actionsFrame,text="Reset system",command=sendReset)
 
 connectBtn = Button(connectionFrame,text="Connect",command=connect)
-baudrate = ttk.Combobox(connectionFrame,width="20")
+baudrate = ttk.Combobox(connectionFrame,width="20",state="readonly")
 baudrate['values'] = [9600,19200,38400,57600,115200]
 baudrate.current(0)
 
