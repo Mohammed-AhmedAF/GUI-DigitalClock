@@ -22,6 +22,7 @@ Assuming avr-dude is installed on your system, you can run `make load` to load t
 
 ## Project status
 Having problems with sending alarm and temperature values to microcontroller. The transmission is broken or LCD doesn't update.
+
 Update: Never mind, it was a wiring issue!
 
 ## Pictures
