@@ -129,7 +129,7 @@ def sendReset():
     except:
         statusLabel['text'] = "Reset signal failed"
 
-def connect():
+def connectByUART():
    #Establishing serial connection
     global ser
     global connectedFlag
@@ -165,14 +165,14 @@ setAlarmButton = Button(alarmFrame,text="Set alarm",command=setAlarm,relief=RAIS
 
 resetBtn = Button(actionsFrame,text="Reset system",command=sendReset)
 
-connectBtn = Button(connectionFrame,text="Connect",command=connect)
+connectBtn = Button(connectionFrame,text="Connect",command=connectByUART)
 baudrate = ttk.Combobox(connectionFrame,width="20",state="readonly")
 baudrate['values'] = [9600,19200,38400,57600,115200]
 baudrate.current(0)
 
 
 #Connect automatically on program startup
-connect()
+connectByUART()
 
 temperatureDisplay = Label(temperatureFrame,text="",anchor=W)
 def sendTemperature():
@@ -220,6 +220,4 @@ clearAlarmButton.grid(row=1,column=1,sticky=W,pady=5)
 statusLabel.grid(row=2,column=0,columnspan=3,sticky=W+E,padx=10)
 systemLabel.grid(row=2,column=3,columnspan=3,sticky=W+E,padx=10)
 
-
 root.mainloop()
-
