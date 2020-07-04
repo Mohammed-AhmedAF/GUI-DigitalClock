@@ -34,6 +34,7 @@ def getTime():
 
 root = Tk()
 root.title("Time Setter")
+root.resizable(width=False,height=False)
 
 photo = PhotoImage(file="images/Crystal_Clear_app_xclock.png")
 root.iconphoto(False,photo)
