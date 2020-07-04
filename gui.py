@@ -50,13 +50,6 @@ statusLabel = Label(root,text="",relief=SUNKEN,anchor=W)
 systemLabel = Label(root,text="",relief=SUNKEN,anchor=W)
 getButton = Button(actionsFrame,text="Get current time",command=getTime)
 
-#Establishing serial connection
-try:
-    ser = serial.Serial('COM4',int(baudrate.get()))
-    statusLabel['text'] = "Connection established!"
-except:
-    statusLabel['text'] = "Connection could not be established"
-
 def sendDayOfWeek():
     statusLabel['text'] = dt.now().weekday()
     try:
@@ -177,6 +170,10 @@ baudrate = ttk.Combobox(connectionFrame,width="20",state="readonly")
 baudrate['values'] = [9600,19200,38400,57600,115200]
 baudrate.current(0)
 
+
+#Connect automatically on program startup
+connect()
+
 temperatureDisplay = Label(temperatureFrame,text="",anchor=W)
 def sendTemperature():
     apiURL = "http://api.openweathermap.org/data/2.5/weather?q=Ismailia&appid=000ea0deb2c5a6f1cb107ca1353ea84d"
@@ -188,7 +185,7 @@ def sendTemperature():
         temperatureDisplay["text"] = str(temperatureReceived) + " Celsius"
         try:
             ser.write(b't')
-            ser.write(int(int(temperatureReceived)).to_bytes(1,'little'));
+            ser.write(int(int(temperatureReceived)).to_bytes(1,'little'))
             ser.write(b't')
             ser.write(b't')
             statusLabel['text'] = "Temperature sent"
