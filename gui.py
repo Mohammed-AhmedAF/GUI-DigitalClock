@@ -17,12 +17,13 @@ minutesAlarm = 0
 daysNow = 0
 monthsNow = 0
 yearsNow = 0
+ser = serial.Serial()
+baudrate = 0
 
 #Flag to check if UART is connected
 connectedFlag = 0
 
 time = "Test"
-
 
 def getTime():
     global hoursNow, minutesNow, secondsNow
@@ -133,27 +134,29 @@ def sendReset():
 def connectByUART():
    #Establishing serial connection
     global ser
-    global connectedFlag
+    global baudrate
     #Checking OS type
     if (platform.system().startswith("Win")):
         serialPort = "COM4"
     else:
         serialPort = "/dev/ttyUSB0"
     #Checking if there is a connection already or establish connection
-    if connectedFlag == 1:
-        statusLabel['text'] = "Already connected!" + " Baudrate: " + baudrate.get()
-    else:
+    if not ser.is_open:
         try:
-            ser = serial.Serial(serialPort,int(baudrate.get()))
-            statusLabel['text'] = "Connection established!" + " Baudrate: "+str(baudrate.get())
-            connectedFlag = 1
+            buadrate = baudrateCmbox.get()
+            ser = serial.Serial(serialPort,baudrate)
+            statusLabel['text'] = "Connection established!" + " Baudrate: "+str(baudrateCmbox.get())
         except:
             statusLabel['text'] = "Could not establish connection"
-            connectedFlag = 0
+    else:
+        if baudrate!=baudrateCmbox.get():
             try:
+                baudrate = int(baudrateCmbox.get())
                 ser.close()
             except:
                 statusLabel['text'] = "No connection handle"
+        else:
+                statusLabel['text'] = "Already connected!"
 
 
 systemLabel['text'] = platform.system()
@@ -166,11 +169,11 @@ setAlarmButton = Button(alarmFrame,text="Set alarm",command=setAlarm,relief=RAIS
 
 resetBtn = Button(actionsFrame,text="Reset system",command=sendReset)
 
-connectBtn = Button(connectionFrame,text="Connect",command=connectByUART)
-baudrate = ttk.Combobox(connectionFrame,width="20",state="readonly")
-baudrate['values'] = [9600,19200,38400,57600,115200]
-baudrate.current(0)
+baudrateCmbox = ttk.Combobox(connectionFrame,width="20",state="readonly")
+baudrateCmbox['values'] = [9600,19200,38400,57600,115200]
+baudrateCmbox.current(0)
 
+connectBtn = Button(connectionFrame,text="Connect",command=connectByUART)
 
 #Connect automatically on program startup
 connectByUART()
@@ -213,7 +216,7 @@ sendButton.grid(row=0,column=2,sticky=W+E)
 resetBtn.grid(row=1,column=0,columnspan=3,sticky=W+E,pady=3)
 sendDateBtn.grid(row=0,column=0,sticky=W+E)
 connectBtn.grid(row=0,column=0,sticky=W+E,pady=5)
-baudrate.grid(row=1,column=0,sticky=W+E)
+baudrateCmbox.grid(row=1,column=0,sticky=W+E)
 hoursSpin.grid(row=0,column=0,padx=3)
 minutesSpin.grid(row=0,column=1,padx=3)
 setAlarmButton.grid(row=1,column=0,sticky=W,pady=5)
