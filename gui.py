@@ -155,6 +155,7 @@ def connectByUART():
             try:
                 baudrate = int(baudrateCmbox.get())
                 ser.close()
+                connectByUART()
             except:
                 updateStatusbar("No connection handle")
         else:
