@@ -19,6 +19,7 @@ monthsNow = 0
 yearsNow = 0
 ser = serial.Serial()
 baudrate = 0
+serialPort = str()
 
 #Flag to check if UART is connected
 connectedFlag = 0
@@ -137,21 +138,21 @@ def connectByUART():
    #Establishing serial connection
     global ser
     global baudrate
+    global serialPort
     #Checking OS type
-    if (platform.system().startswith("Win")):
-        serialPort = portCmbox.get()
-    else:
+    if not (platform.system().startswith("Win")):
         serialPort = "/dev/ttyUSB0"
     #Checking if there is a connection already or establish connection
     if not ser.is_open:
         try:
             baudrate = baudrateCmbox.get()
+            serialPort = portCmbox.get()
             ser = serial.Serial(serialPort,baudrate)
-            statusLabel['text'] = "Connection established!" + " Baudrate: "+str(baudrateCmbox.get())
+            updateStatusbar("Connection established!" + " Baudrate: "+str(baudrateCmbox.get()) + " on " + serialPort)
         except:
-            statusLabel['text'] = "Could not establish connection"
+            updateStatusbar("Could not establish connection "  + "on " + serialPort + " with baudrate " + str(baudrateCmbox.get()))
     else:
-        if baudrate!=baudrateCmbox.get():
+        if baudrate!=baudrateCmbox.get() or serialPort!=portCmbox.get():
             try:
                 baudrate = int(baudrateCmbox.get())
                 ser.close()
@@ -172,6 +173,8 @@ setAlarmButton = Button(alarmFrame,text="Set alarm",command=setAlarm,relief=RAIS
 
 resetBtn = Button(actionsFrame,text="Reset system",command=sendReset)
 
+portLabel = Label(connectionFrame,text="Port: ")
+baudrateLabel = Label(connectionFrame,text="Baudrate: ")
 baudrateCmbox = ttk.Combobox(connectionFrame,width="20",state="readonly")
 baudrateCmbox['values'] = [9600,19200,38400,57600,115200]
 baudrateCmbox.current(0)
@@ -221,13 +224,15 @@ sendButton.grid(row=0,column=2,sticky=W+E)
 resetBtn.grid(row=1,column=0,columnspan=3,sticky=W+E,pady=3)
 sendDateBtn.grid(row=0,column=0,sticky=W+E)
 connectBtn.grid(row=2,column=0,sticky=W+E,pady=5)
-baudrateCmbox.grid(row=1,column=0,sticky=W+E)
-portCmbox.grid(row=0,column=0,sticky=W+E)
+portLabel.grid(row=0,column=0,stick=W)
+baudrateLabel.grid(row=1,column=0,sticky=W)
+baudrateCmbox.grid(row=1,column=1)
+portCmbox.grid(row=0,column=1,sticky=W+E)
 hoursSpin.grid(row=0,column=0,padx=3)
 minutesSpin.grid(row=0,column=1,padx=3)
 setAlarmButton.grid(row=1,column=0,sticky=W+E,pady=5)
 clearAlarmButton.grid(row=1,column=1,sticky=W+E,pady=5)
 statusLabel.grid(row=2,column=0,columnspan=3,sticky=W+E,padx=10)
-systemLabel.grid(row=2,column=3,columnspan=3,sticky=W+E,padx=10)
+systemLabel.grid(row=2,column=3,columnspan=2,sticky=W+E,padx=10)
 
 root.mainloop()
