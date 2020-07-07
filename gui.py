@@ -31,7 +31,7 @@ def getTime():
     hoursNow = dt.now().hour
     minutesNow = dt.now().minute
     secondsNow = dt.now().second
-    statusLabel['text'] = dt.now().strftime("%H:%M:%S")
+    updateStatusbar(dt.now().strftime("%H:%M:%S"))
 
 def updateStatusbar(message):
     statusLabel['text'] = message
@@ -63,9 +63,9 @@ def sendDayOfWeek():
         ser.write(dt.now().weekday().to_bytes(1,'little'))
         ser.write(dt.now().weekday().to_bytes(1,'little'))
         ser.write(dt.now().weekday().to_bytes(1,'little'))
-        statusLabel['text'] = "Day is " + str(dt.now().weekday())
+        updateStatusbar("Day is " + str(dt.now().weekday()))
     except:
-        statusLabel['text'] = "Error sending day of the week"
+        updateStatusbar("Error sending day of the week")
 
 def sendDate():
     global daysNow, monthsNow, yearsNow
@@ -77,11 +77,11 @@ def sendDate():
         ser.write(int(daysNow).to_bytes(1,'little'))
         ser.write(int(monthsNow).to_bytes(1,'little'))
         ser.write(int(yearsNow-2000).to_bytes(1,'little'))
-        statusLabel['text'] = "Date sent"
+        updateStatusbar("Date sent")
         sendDayOfWeek()
     except:
-        statusLabel['text'] = dt.today()
-        statusLabel['text'] = "Error sending date"
+        updateStatusbar(dt.today())
+        updateStatusbar("Error sending date")
 
 sendDateBtn = Button(actionsFrame,text="Send date",command=sendDate)
 
@@ -92,9 +92,9 @@ def sendTime():
         ser.write(int(hoursNow).to_bytes(1,'little'))
         ser.write(int(minutesNow).to_bytes(1,'little'))
         ser.write(int(secondsNow).to_bytes(1,'little'))
-        statusLabel['text'] = "Current time set"
+        updateStatusbar("Current time set")
     except:
-        statusLabel['text'] = "Error sending current time"
+        updateStatusbar("Error sending current time")
 
 def setAlarm():
     global hoursAlarm, minutesAlarm
@@ -102,18 +102,18 @@ def setAlarm():
     minutesAlarm = minutesSpin.get()
     #Checking entered values
     if (int(hoursAlarm) > 23 or int(minutesAlarm) > 59):
-        statusLabel['text'] = "Invalid alarm values entered"
+        updateStatusbar("Invalid alarm values entered")
     else:
-        statusLabel['text'] = str(hoursAlarm) + ':' + str(minutesAlarm)
+        updateStatusbar(str(hoursAlarm) + ':' + str(minutesAlarm))
         #sending hours and minutes of alarm via UART
         try:
             ser.write(b'a')
             ser.write(int(hoursAlarm).to_bytes(1,'little'))
             ser.write(int(minutesAlarm).to_bytes(1,'little'))
             ser.write(b'q')
-            statusLabel['text'] = "Alarm sent"
+            updateStatusbar("Alarm sent")
         except:
-            statusLabel['text'] = "Error sending alarm"
+            updateStatusbar("Error sending alarm")
 
 def clearAlarm():
     try:
@@ -122,7 +122,7 @@ def clearAlarm():
         ser.write(b'u')
         ser.write(b'u')
     except:
-        statusLabel['text'] = "Clear alarm signal failed"
+        updateStatusbar("Clear alarm signal failed")
 
 def sendReset():
     try:
@@ -130,9 +130,9 @@ def sendReset():
         ser.write(b'r')
         ser.write(b'r')
         ser.write(b'r')
-        statusLabel['text'] = "Reset signal sent"
+        updateStatusbar("Reset signal sent")
     except:
-        statusLabel['text'] = "Reset signal failed"
+        updateStatusbar("Reset signal failed")
 
 def connectByUART():
    #Establishing serial connection
