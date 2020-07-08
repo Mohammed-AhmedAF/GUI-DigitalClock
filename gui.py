@@ -80,7 +80,6 @@ def sendDate():
         updateStatusbar("Date sent")
         sendDayOfWeek()
     except:
-        updateStatusbar(dt.today())
         updateStatusbar("Error sending date")
 
 sendDateBtn = Button(actionsFrame,text="Send date",command=sendDate)
@@ -223,15 +222,21 @@ getButton.grid(row=0,column=1,sticky=W)
 sendButton.grid(row=0,column=2,sticky=W+E)
 resetBtn.grid(row=1,column=0,columnspan=3,sticky=W+E,pady=3)
 sendDateBtn.grid(row=0,column=0,sticky=W+E)
+
+#Connection elements palcements
 connectBtn.grid(row=2,column=0,sticky=W+E,pady=5)
 portLabel.grid(row=0,column=0,stick=W)
 baudrateLabel.grid(row=1,column=0,sticky=W)
 baudrateCmbox.grid(row=1,column=1)
 portCmbox.grid(row=0,column=1,sticky=W+E)
+
+#Alarm elements placements
 hoursSpin.grid(row=0,column=0,padx=3)
 minutesSpin.grid(row=0,column=1,padx=3)
 setAlarmButton.grid(row=1,column=0,sticky=W+E,pady=5)
 clearAlarmButton.grid(row=1,column=1,sticky=W+E,pady=5)
+
+#Status and system bars
 statusLabel.grid(row=2,column=0,columnspan=3,sticky=W+E,padx=10)
 systemLabel.grid(row=2,column=3,columnspan=2,sticky=W+E,padx=10)
 
