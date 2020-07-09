@@ -172,6 +172,7 @@ setAlarmButton = Button(alarmFrame,text="Set alarm",command=setAlarm,relief=RAIS
 
 resetBtn = Button(actionsFrame,text="Reset system",command=sendReset)
 
+#Connection elements
 portLabel = Label(connectionFrame,text="Port: ")
 baudrateLabel = Label(connectionFrame,text="Baudrate: ")
 baudrateCmbox = ttk.Combobox(connectionFrame,width="20",state="readonly")
