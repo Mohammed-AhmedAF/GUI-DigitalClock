@@ -31,4 +31,4 @@ Update: Never mind, it was a wiring issue!
 ## Pictures
 ![image](/images/gui_screenshot.png) 
 ![image](/images/schematic.png)
-![image](/images/acutal_digital_clock.jpg)
+![image](/images/actual_digital_clock.jpg)
