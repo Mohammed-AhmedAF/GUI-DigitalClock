@@ -13,7 +13,7 @@
 
 #include "Std_Types.h"
 #include "Macros.h"
-#include "MCAL/DIO_interface.h"
+#include "DIO_interface.h"
 #include "LCD_interface.h"
 #include <util/delay.h>
 
