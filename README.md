@@ -20,6 +20,9 @@ Just put the files of the project in one folder/directory, and then run `make bu
 
 Assuming avr-dude is installed on your system, you can run `make load` to load the program into the MCU.
 
+## Todo
+Adding cycling of baudrate via external interrupt
+
 ## Project status
 Having problems with sending alarm and temperature values to microcontroller. The transmission is broken or LCD doesn't update.
 
