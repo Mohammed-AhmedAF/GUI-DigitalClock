@@ -28,4 +28,4 @@ Update: Never mind, it was a wiring issue!
 ## Pictures
 ![image](/images/gui_screenshot.png) 
 ![image](/images/schematic.png)
-![image](https://user-images.githubusercontent.com/4983317/73939388-04eabe80-48f2-11ea-918b-3a90808dafb3.jpg)
+![image](/images/acutal_digital_clock.jpg)
