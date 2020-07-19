@@ -136,9 +136,9 @@ void DCLOCK_vidGetTime(void)
 void DCLOCK_vidCountOneSecond(void)
 {
 	u32CountTime++;
-	if (u32CountTime == 31500)
+	if (u32CountTime == 31250)
 	{
-		u32CountTime = 0;	
+		u32CountTime = 0;
 		/*Show time*/
 		LCD_vidSendCommand(LCD_RETURN_HOME);
 		RTC_vidGetTime(&rtc);
