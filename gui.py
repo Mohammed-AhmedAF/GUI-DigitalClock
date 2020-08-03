@@ -26,12 +26,27 @@ connectedFlag = 0
 
 time = "Test"
 
+def sendFrame(frame):
+    ser.write(frame[0])
+    ser.write(frame[1])
+    ser.write(frame[2])
+    ser.write(frame[3])
+
 def getTime():
     global hoursNow, minutesNow, secondsNow
     hoursNow = dt.now().hour
     minutesNow = dt.now().minute
     secondsNow = dt.now().second
     updateStatusbar(dt.now().strftime("%H:%M:%S"))
+
+def prepareFrame(a,b,c,d):
+    frame = []
+    frame[0] = a.to_bytes(1,'little');
+    frame[1] = b.to_bytes(1,'little');
+    frame[2] = c.to_bytes(1,'little');
+    frame[3] = d.to_bytes(1,'little');
+    return frame
+
 
 def updateStatusbar(message):
     statusLabel['text'] = message
@@ -141,11 +156,12 @@ def connectByUART():
     #Checking OS type
     if not (platform.system().startswith("Win")):
         serialPort = "/dev/ttyUSB0"
+    else:
+        serialPort = portCmbox.get()
     #Checking if there is a connection already or establish connection
     if not ser.is_open:
         try:
             baudrate = baudrateCmbox.get()
-            serialPort = portCmbox.get()
             ser = serial.Serial(serialPort,baudrate)
             updateStatusbar("Connection established!" + " Baudrate: "+str(baudrateCmbox.get()) + " on " + serialPort)
         except:
