@@ -23,15 +23,13 @@ serialPort = str()
 
 #Flag to check if UART is connected
 connectedFlag = 0
-
 time = "Test"
 
 def sendFrame(frame):
-    frame = [b'r',b'r',b'r',b'r']
-    ser.write(frame[0])
-    ser.write(b'r')
-    ser.write(b'r')
-    ser.write(b'r')
+    ser.write(frame[0].encode())
+    ser.write(frame[1].encode())
+    ser.write(frame[2].encode())
+    ser.write(frame[3].encode())
 
 def getTime():
     global hoursNow, minutesNow, secondsNow
