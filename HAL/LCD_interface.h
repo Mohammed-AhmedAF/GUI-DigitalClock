@@ -29,9 +29,9 @@
 
 #define LCD_MOVE_CURSOR_LEFT 0x14
 
-#define LCD_E DIO_PIN4
-#define LCD_RW DIO_PIN3
-#define LCD_RS DIO_PIN2
+#define LCD_E DIO_PIN5
+#define LCD_RW DIO_PIN4
+#define LCD_RS DIO_PIN3
 
 /*Macros defined to be used with the GoTOXY function*/
 #define LCD_XPOS0 0

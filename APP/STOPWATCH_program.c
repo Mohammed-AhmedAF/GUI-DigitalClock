@@ -12,6 +12,8 @@ volatile u8 u8StopwatchFlag = 0;
 void STOPWATCH_vidToggle()
 {
 	u8StopwatchFlag ^= (1<<0);
+	LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS3);
+	LCD_vidWriteString("Stop wa.:");
 }
 
 void STOPWATCH_vidRun(void)
