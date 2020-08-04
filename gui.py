@@ -27,10 +27,11 @@ connectedFlag = 0
 time = "Test"
 
 def sendFrame(frame):
+    frame = [b'r',b'r',b'r',b'r']
     ser.write(frame[0])
-    ser.write(frame[1])
-    ser.write(frame[2])
-    ser.write(frame[3])
+    ser.write(b'r')
+    ser.write(b'r')
+    ser.write(b'r')
 
 def getTime():
     global hoursNow, minutesNow, secondsNow
@@ -41,7 +42,7 @@ def getTime():
 
 def prepareFrame(a,b,c,d):
     frame = []
-    frame[0] = a.to_bytes(1,'little');
+    frame[0] = b;
     frame[1] = b.to_bytes(1,'little');
     frame[2] = c.to_bytes(1,'little');
     frame[3] = d.to_bytes(1,'little');
@@ -140,10 +141,7 @@ def clearAlarm():
 
 def sendReset():
     try:
-        ser.write(b'r')
-        ser.write(b'r')
-        ser.write(b'r')
-        ser.write(b'r')
+        sendFrame(['r','r','r','r'])
         updateStatusbar("Reset signal sent")
     except:
         updateStatusbar("Reset signal failed")
@@ -153,15 +151,12 @@ def connectByUART():
     global ser
     global baudrate
     global serialPort
-    #Checking OS type
-    if not (platform.system().startswith("Win")):
-        serialPort = "/dev/ttyUSB0"
-    else:
-        serialPort = portCmbox.get()
+
     #Checking if there is a connection already or establish connection
     if not ser.is_open:
         try:
             baudrate = baudrateCmbox.get()
+            serialPort = portCmbox.get()
             ser = serial.Serial(serialPort,baudrate)
             updateStatusbar("Connection established!" + " Baudrate: "+str(baudrateCmbox.get()) + " on " + serialPort)
         except:
@@ -196,7 +191,12 @@ baudrateCmbox['values'] = [9600,19200,38400,57600,115200]
 baudrateCmbox.current(0)
 
 connectBtn = Button(connectionFrame,text="Connect",command=connectByUART)
-portCmbox = ttk.Combobox(connectionFrame,values=["COM3","COM4"],state="readonly")
+if not (platform.system().startswith("Win")):
+    port = ["/dev/ttyUSB0","Other"]
+else:
+    port = ["COM3","COM4"]
+
+portCmbox = ttk.Combobox(connectionFrame,values=port,state="readonly")
 portCmbox.current(0)
 
 #Connect automatically on program startup
