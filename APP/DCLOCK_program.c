@@ -5,6 +5,7 @@
 #include "UART_interface.h"
 #include "LCD_interface.h"
 #include "RTC_interface.h"
+#include "STOPWATCH_interface.h"
 #include "DCLOCK_interface.h"
 
 volatile u32 u32CountTime;
@@ -14,45 +15,10 @@ volatile u8 u8Temperature;
 RTC_t rtc;
 volatile u8 u8MessageArray[DCLOCK_MESSAGESIZE];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
-/*Stopwatch variables*/
-volatile u8 u8SSeconds = 0;
-volatile u8 u8SMinutes = 0;
-volatile u8 u8StopwatchFlag = 0;
-
 u8 * u8DaysOfWeek_Arr[7] = {"Mon","Tues","Wed","Thu","Fri","Sat","Sun"};
 
 /*Declaring alarm values struct*/
 strctAlarm_t strctAlarm;
-
-void STOPWATCH_vidToggle()
-{
-	u8StopwatchFlag ^= (1<<0);
-}
-
-void STOPWATCH_vidRun(void)
-{
-	u8SSeconds++;
-	if (u8SSeconds == 60)
-	{
-		u8SSeconds = 0;
-		u8SMinutes++;
-	}
-
-	/*Minutes*/
-	LCD_vidGoToXY(LCD_XPOS9,LCD_YPOS3);
-	LCD_vidWriteNumber(u8SMinutes);
-	LCD_vidWriteCharacter(':');
-	/*Seconds*/
-	LCD_vidGoToXY(LCD_XPOS12,LCD_YPOS3);
-	LCD_vidWriteNumber(u8SSeconds);
-
-}
-
-void STOPWATCH_vidStop(void)
-{
-	u8SSeconds = 0;
-	u8SMinutes = 0;
-}
 
 /*Checking alarm flag when microcontroller is reset*/
 void DCLOCK_vidCheckAlarmFlag(void)
@@ -168,7 +134,7 @@ void DCLOCK_vidGetTime(void)
 		else if (u8MessageArray[0] == 's')
 		{
 			LCD_vidGoToXY(LCD_XPOS1,LCD_YPOS3);
-			if (u8StopwatchFlag == 0)
+			if (STOPWATCH_u8CheckFlag()  == 0)
 			{
 				LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS3);
 				LCD_vidWriteString("Stopwa.: ");
@@ -230,7 +196,7 @@ void DCLOCK_vidCountOneSecond(void)
 			}
 		}
 		/*Stopwatch display*/
-		if (u8StopwatchFlag == 1)
+		if (STOPWATCH_u8CheckFlag()  == 1)
 		{
 			STOPWATCH_vidRun();
 		}
@@ -275,7 +241,7 @@ void DCLOCK_vidResetSystem(void)
 	LCD_vidSendCommand(LCD_CLEAR_SCREEN);
 	/*Displaying alarm notification if alarm is set*/
 	DCLOCK_vidCheckAlarmFlag();
-	if (u8StopwatchFlag == 1)
+	if (STOPWATCH_u8CheckFlag()  == 1)
 	{
 		LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS3);
 		LCD_vidWriteString("Stop wa.:");
