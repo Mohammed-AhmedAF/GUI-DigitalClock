@@ -14,11 +14,45 @@ volatile u8 u8Temperature;
 RTC_t rtc;
 volatile u8 u8MessageArray[DCLOCK_MESSAGESIZE];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
+/*Stopwatch variables*/
+volatile u8 u8SSeconds = 0;
+volatile u8 u8SMinutes = 0;
+volatile u8 u8StopwatchFlag = 0;
 
 u8 * u8DaysOfWeek_Arr[7] = {"Mon","Tues","Wed","Thu","Fri","Sat","Sun"};
 
 /*Declaring alarm values struct*/
 strctAlarm_t strctAlarm;
+
+void STOPWATCH_vidToggle()
+{
+	u8StopwatchFlag ^= (1<<0);
+}
+
+void STOPWATCH_vidRun(void)
+{
+	u8SSeconds++;
+	if (u8SSeconds == 60)
+	{
+		u8SSeconds = 0;
+		u8SMinutes++;
+	}
+
+	/*Minutes*/
+	LCD_vidGoToXY(LCD_XPOS9,LCD_YPOS3);
+	LCD_vidWriteNumber(u8SMinutes);
+	LCD_vidWriteCharacter(':');
+	/*Seconds*/
+	LCD_vidGoToXY(LCD_XPOS12,LCD_YPOS3);
+	LCD_vidWriteNumber(u8SSeconds);
+
+}
+
+void STOPWATCH_vidStop(void)
+{
+	u8SSeconds = 0;
+	u8SMinutes = 0;
+}
 
 /*Checking alarm flag when microcontroller is reset*/
 void DCLOCK_vidCheckAlarmFlag(void)
@@ -93,6 +127,8 @@ void DCLOCK_vidGetTime(void)
 			/*Store alarm values in EEPROM, to retrieve them if system
 			 *is reset before alarm is cleared */
 			DCLOCK_vidStoreAlarmValues(&strctAlarm);
+			/*Reset whole system*/
+			DCLOCK_vidResetSystem();
 
 		}
 		/*Set date*/
@@ -109,6 +145,7 @@ void DCLOCK_vidGetTime(void)
 			LCD_vidSendCommand(LCD_CLEAR_SCREEN);
 			rtc.u8DayOfWeek = RTC_DEC2BCD(u8MessageArray[1]);
 			RTC_vidSetDayOfWeek(&rtc);
+			DCLOCK_vidResetSystem();
 		}
 		/*Clear alarm*/
 		else if (u8MessageArray[0] == 'u')
@@ -124,9 +161,23 @@ void DCLOCK_vidGetTime(void)
 		else if (u8MessageArray[0] == 't')
 		{
 			u8Temperature = u8MessageArray[1];
-			LCD_vidGoToXY(LCD_XPOS10,LCD_YPOS3);
-			LCD_vidWriteString("Temp.: ");
+			LCD_vidGoToXY(LCD_XPOS15,LCD_YPOS3);
+			LCD_vidWriteString("T: ");
 			LCD_vidWriteNumber(u8Temperature);
+		}
+		else if (u8MessageArray[0] == 's')
+		{
+			LCD_vidGoToXY(LCD_XPOS1,LCD_YPOS3);
+			if (u8StopwatchFlag == 0)
+			{
+				LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS3);
+				LCD_vidWriteString("Stopwa.: ");
+				STOPWATCH_vidToggle();
+			}
+			else {
+				STOPWATCH_vidToggle();
+			}
+
 		}
 
 	}
@@ -178,6 +229,14 @@ void DCLOCK_vidCountOneSecond(void)
 				DCLOCK_vidClearAlarmFlag();
 			}
 		}
+		/*Stopwatch display*/
+		if (u8StopwatchFlag == 1)
+		{
+			STOPWATCH_vidRun();
+		}
+		else {
+			STOPWATCH_vidStop();
+		}
 
 	}
 }
@@ -216,4 +275,9 @@ void DCLOCK_vidResetSystem(void)
 	LCD_vidSendCommand(LCD_CLEAR_SCREEN);
 	/*Displaying alarm notification if alarm is set*/
 	DCLOCK_vidCheckAlarmFlag();
+	if (u8StopwatchFlag == 1)
+	{
+		LCD_vidGoToXY(LCD_XPOS0,LCD_YPOS3);
+		LCD_vidWriteString("Stop wa.:");
+	}
 }

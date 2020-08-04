@@ -7,6 +7,7 @@ A digital clock using the AVR ATMega16 (or ATMega32) and DS-1307 RTC that is set
 * Alarm functionality, and keeping the alarm in internal EEPROM.
 * Display a message that an alarm is set, even if the system is reset before the alarm event takes place.
 * When an alarm event happens, a pin is toggled for a minute. Then the alarm notification disappears from the LCD.
+* Stopwatch functionality, controlled by GUI.
 * Set current current time, date and alarm via GUI application.
 * Get temperature of a city (name in python code) from the web, and send it to MCU.
 * Clear LCD screen with GUI.

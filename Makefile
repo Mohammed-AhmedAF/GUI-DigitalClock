@@ -8,9 +8,9 @@
 
 MAIN = main.c
 CC = avr-gcc
-SRC = *.c
+SRC = ./HAL/*c ./MCAL/*c ./APP/*.c
 MICROCNTRL = atmega32
-CFLAGS = -mmcu=$(MICROCNTRL) -I . -O3
+CFLAGS = -mmcu=$(MICROCNTRL) -I . -I ./HAL -I ./MCAL -I ./APP -I ./SERVICES -O3
 
 PRO = avrdude
 

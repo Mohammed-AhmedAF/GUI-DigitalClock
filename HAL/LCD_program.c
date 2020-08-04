@@ -63,11 +63,10 @@ void LCD_vidSendCommand(u8 commandCpy) {
 	DIO_vidSetPinValue(LCD_DATA_PORT,LCD_D7,GET_BIT(commandCpy,7));
 
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_HIGH);
-	_delay_ms(2);
+	_delay_ms(1);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_LOW);
-	_delay_ms(2);
+	_delay_ms(1);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_HIGH);
-	_delay_ms(2);
 }
 
 void LCD_vidWriteCharacter(u8 charCpy) {
@@ -84,9 +83,9 @@ void LCD_vidWriteCharacter(u8 charCpy) {
 	DIO_vidSetPinValue(LCD_DATA_PORT,LCD_D7,GET_BIT(charCpy,7));
 
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_HIGH);
-	_delay_ms(2);
+	_delay_ms(1);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_LOW);
-	_delay_ms(2);
+	_delay_ms(1);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_HIGH);
 }
 

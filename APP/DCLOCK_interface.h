@@ -14,6 +14,11 @@ void DCLOCK_vidStoreAlarmValues(strctAlarm_t *);
 void DCLOCK_vidRetrieveAlarmValues(strctAlarm_t *);
 void DCLOCK_vidResetSystem(void);
 
+/*Stopwatch*/
+void STOPWATCH_vidToggle(void);
+void STOPWATCH_vidRun(void);
+void STOPWATCH_vidStop(void);
+
 #define DCLOCK_ALARM_ADDRESS 10
 #define DCLOCK_ALARM_SET 1
 #define DCLOCK_ALARM_CLEARED 0

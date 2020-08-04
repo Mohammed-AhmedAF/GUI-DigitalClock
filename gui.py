@@ -52,15 +52,16 @@ def updateStatusbar(message):
 
 root = Tk()
 root.title("Time Setter")
-root.resizable(width=False,height=False)
+root.resizable(width=True,height=False)
 
 photo = PhotoImage(file="images/Crystal_Clear_app_xclock.png")
 root.iconphoto(False,photo)
 
-actionsFrame = LabelFrame(root,text="Set current time")
-alarmFrame = LabelFrame(root,text="Set alarm")
-temperatureFrame = LabelFrame(root,text="Temperature")
+actionsFrame = LabelFrame(root,text="Set current time",padx=10,pady=5)
+alarmFrame = LabelFrame(root,text="Set alarm",padx=10,pady=5)
+temperatureFrame = LabelFrame(root,text="Temperature",padx=10,pady=5)
 connectionFrame = LabelFrame(root,text="Connection",padx=10,pady=5)
+stopwatchFrame = LabelFrame(root,text="Stopwatch",padx=10,pady=5)
 
 #Alarm spinboxes
 hoursSpin = Spinbox(alarmFrame,from_=0,to=23,font=Font(size=14))
@@ -170,6 +171,13 @@ def connectByUART():
         else:
                 updateStatusbar("Already connected!")
 
+def sendStopWatch():
+    try:
+        sendFrame(['s','s','s','s'])
+        updateStatusbar("Stop signal sent")
+    except:
+        updateStatusbar("Error sending stop signal")
+
 
 systemLabel['text'] = platform.system()
 
@@ -178,7 +186,7 @@ clearAlarmButton = Button(alarmFrame,text="Clear alarm",command=clearAlarm,justi
 
 sendButton = Button(actionsFrame,text="Send time",command=sendTime)
 setAlarmButton = Button(alarmFrame,text="Set alarm",command=setAlarm,relief=RAISED,justify="center")
-
+sendStopWatchButton = Button(stopwatchFrame,text="Toggle Stopwatch",command=sendStopWatch)
 resetBtn = Button(actionsFrame,text="Reset system",command=sendReset)
 
 #Connection elements
@@ -227,10 +235,14 @@ actionsFrame.grid(row=1,column=0,padx=10,pady=5,sticky=N+S)
 alarmFrame.grid(row=1,column=1,padx=10,pady=5,sticky=N+S)
 temperatureFrame.grid(row=1,column=2,padx=10,pady=5,sticky=N+S)
 connectionFrame.grid(row=1,column=3,padx=10,pady=5,sticky=N+S)
+stopwatchFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S);
 
 #Temperature elements
 temperatureDisplay.grid(row=0,column=0,padx=10,pady=5,sticky=N+S)
 sendTemperatureBtn.grid(row=1,column=0,padx=10,pady=5,sticky=N+S)
+
+#Stopwatc
+sendStopWatchButton.grid(row=0,column=0,padx=10,pady=5,stick=N+S)
 
 #Time elements placements
 getButton.grid(row=0,column=1,sticky=W)
