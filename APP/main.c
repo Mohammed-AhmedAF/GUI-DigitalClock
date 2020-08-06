@@ -21,9 +21,11 @@ void main(void)
 	/*Initializing RTC*/
 	RTC_vidInit();
 
+	/*Configuring pin used to control stopwatch*/
 	DIO_vidSetPinDirection(DIO_PORTD,DIO_PIN2,DIO_INPUT);
 	DIO_vidSetPinValue(DIO_PORTD,DIO_PIN2,STD_HIGH);
 
+	/*Enabling UART interrupt*/
 	INTERRUPTS_vidEnableInterrupt(INTERRUPTS_USART_RXC);
 	INTERRUPTS_vidPutISRFunction(INTERRUPTS_USART_RXC,DCLOCK_vidGetTime);
 
