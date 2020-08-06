@@ -46,9 +46,11 @@ void main(void)
 	 * has been reset afterwards before the alarm was cleared*/
 	DCLOCK_vidCheckAlarmFlag();
 	INTERRUPTS_vidSetGlobalInterruptFlag();
-	while(1) {			
+	while(1) {
+		DCLOCK_vidDisplayTime();
 		/*Putting the MCU in sleep mode*/
 		SYSCNTRL_vidEnableSleep(SYSCNTRL_SLEEPMODE_IDLE);
+			
 	}
 }
 

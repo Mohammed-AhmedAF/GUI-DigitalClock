@@ -12,6 +12,7 @@ volatile u32 u32CountTime;
 volatile u8 u8index = 0;
 volatile u8 u8Byte;
 volatile u8 u8Temperature;
+volatile u8 u8DisplayTimeFlag = 0;
 RTC_t rtc;
 volatile u8 u8MessageArray[DCLOCK_MESSAGESIZE];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
@@ -149,13 +150,12 @@ void DCLOCK_vidGetTime(void)
 	}
 }
 
-/*Called when timer overflow interrupt event happens*/
-void DCLOCK_vidCountOneSecond(void)
+void DCLOCK_vidDisplayTime(void)
 {
-	u32CountTime++;
-	if (u32CountTime == 31250)
+	if (u8DisplayTimeFlag == 1)
 	{
-		u32CountTime = 0;
+	
+		u8DisplayTimeFlag = 0;
 		/*Show time*/
 		LCD_vidSendCommand(LCD_RETURN_HOME);
 		RTC_vidGetTime(&rtc);
@@ -203,7 +203,21 @@ void DCLOCK_vidCountOneSecond(void)
 		else {
 			STOPWATCH_vidStop();
 		}
+	}
+	else {
+	
+	}
+}
 
+/*Called when timer overflow interrupt event happens*/
+void DCLOCK_vidCountOneSecond(void)
+{
+	u32CountTime++;
+	if (u32CountTime == 31250)
+	{
+		u8DisplayTimeFlag = 1;
+		u32CountTime = 0;
+		
 	}
 }
 

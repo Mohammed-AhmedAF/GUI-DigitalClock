@@ -13,6 +13,7 @@ void DCLOCK_vidCountOneSecond(void);
 void DCLOCK_vidStoreAlarmValues(strctAlarm_t *);
 void DCLOCK_vidRetrieveAlarmValues(strctAlarm_t *);
 void DCLOCK_vidResetSystem(void);
+void DCLOCK_vidDisplayTime(void);
 
 /*Stopwatch*/
 void STOPWATCH_vidToggle(void);
