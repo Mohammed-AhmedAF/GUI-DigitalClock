@@ -47,6 +47,7 @@ void main(void)
 	/*After reset, check alarm flag in case the alarm was set and the microcontroller
 	 * has been reset afterwards before the alarm was cleared*/
 	DCLOCK_vidCheckAlarmFlag();
+	/*Enabling global interrupt, to allow all interrupt handling*/
 	INTERRUPTS_vidSetGlobalInterruptFlag();
 	while(1) {
 		DCLOCK_vidDisplayTime();
