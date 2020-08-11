@@ -46,7 +46,6 @@ def prepareFrame(a,b,c,d):
     frame[3] = d.to_bytes(1,'little');
     return frame
 
-
 def updateStatusbar(message):
     statusLabel['text'] = message
 
@@ -197,6 +196,7 @@ baudrateCmbox['values'] = [9600,19200,38400,57600,115200]
 baudrateCmbox.current(0)
 
 connectBtn = Button(connectionFrame,text="Connect",command=connectByUART)
+#Port values are defined based on OS the gui is running on
 if not (platform.system().startswith("Win")):
     port = ["/dev/ttyUSB0","Other"]
 else:
@@ -241,7 +241,7 @@ stopwatchFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S);
 temperatureDisplay.grid(row=0,column=0,padx=10,pady=5,sticky=N+S)
 sendTemperatureBtn.grid(row=1,column=0,padx=10,pady=5,sticky=N+S)
 
-#Stopwatc
+#Stopwatch
 sendStopWatchButton.grid(row=0,column=0,padx=10,pady=5,stick=N+S)
 
 #Time elements placements
@@ -250,7 +250,7 @@ sendButton.grid(row=0,column=2,sticky=W+E)
 resetBtn.grid(row=1,column=0,columnspan=3,sticky=W+E,pady=3)
 sendDateBtn.grid(row=0,column=0,sticky=W+E)
 
-#Connection elements palcements
+#Connection elements placements
 connectBtn.grid(row=2,column=0,sticky=W+E,pady=5)
 portLabel.grid(row=0,column=0,stick=W)
 baudrateLabel.grid(row=1,column=0,sticky=W)
@@ -264,7 +264,7 @@ setAlarmButton.grid(row=1,column=0,sticky=W+E,pady=5)
 clearAlarmButton.grid(row=1,column=1,sticky=W+E,pady=5)
 
 #Status and system bars
-statusLabel.grid(row=2,column=0,columnspan=3,sticky=W+E,padx=10)
+statuslabel.grid(row=2,column=0,columnspan=3,sticky=w+e,padx=10)
 systemLabel.grid(row=2,column=3,columnspan=2,sticky=W+E,padx=10)
 
 root.mainloop()
