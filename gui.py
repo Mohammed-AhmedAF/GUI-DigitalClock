@@ -130,10 +130,7 @@ def setAlarm():
 
 def clearAlarm():
     try:
-        ser.write(b'u')
-        ser.write(b'u')
-        ser.write(b'u')
-        ser.write(b'u')
+        sendFrame(['u','u','u','u'])
     except:
         updateStatusbar("Clear alarm signal failed")
 
