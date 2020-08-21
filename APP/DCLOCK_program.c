@@ -132,6 +132,7 @@ void DCLOCK_vidGetTime(void)
 			LCD_vidWriteString("T: ");
 			LCD_vidWriteNumber(u8Temperature);
 		}
+		/*Set stopwatch*/
 		else if (u8MessageArray[0] == 's')
 		{
 			LCD_vidGoToXY(LCD_XPOS1,LCD_YPOS3);
