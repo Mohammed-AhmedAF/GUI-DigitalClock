@@ -25,9 +25,17 @@ Assuming avr-dude is installed on your system, you can run `make load` to load t
 Adding cycling of baudrate via external interrupt
 
 ## Wiring
+### LCD Wiring
 | LCD pin | AVR pin |
 |---------|---------|
-| D0 | PD0 |
+| D0 | PB0 |
+| D1 | PB1 |
+| D2 | PB2 |
+| D3 | PB3 |
+| D4 | PB4 |
+| D5 | PB5 |
+| D6 | PB6 |
+| D7 | PB7 |
 
 
 ## Pictures
