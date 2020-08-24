@@ -24,6 +24,12 @@ Assuming avr-dude is installed on your system, you can run `make load` to load t
 ## Todo
 Adding cycling of baudrate via external interrupt
 
+## Wiring
+| LCD pin | AVR pin |
+|---------|---------|
+| D0 | PD0 |
+
+
 ## Pictures
 ![image](/images/gui_screenshot.png) 
 ![image](/images/schematic.png)
