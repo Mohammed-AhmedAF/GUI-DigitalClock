@@ -36,6 +36,9 @@ Adding cycling of baudrate via external interrupt
 | D5 | PB5 |
 | D6 | PB6 |
 | D7 | PB7 |
+| RS | PD3 |
+| RW | PD4 |
+| En | PD5 |
 
 
 ## Pictures
