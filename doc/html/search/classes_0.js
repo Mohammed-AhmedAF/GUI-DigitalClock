@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rtc_5ft',['RTC_t',['../structRTC__t.html',1,'']]]
+  ['rtc_5ft',['RTC_t',['../struct_r_t_c__t.html',1,'']]]
 ];
