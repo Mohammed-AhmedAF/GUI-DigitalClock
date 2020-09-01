@@ -6,7 +6,7 @@
 #define _LCD_INTERFACE_H
 
 #define LCD_DATA_PORT DIO_PORTB
-#define LCD_CTRL_PORT DIO_PORTD
+#define LCD_CTRL_PORT DIO_PORTA
 
 #define LCD_D0 DIO_PIN0
 #define LCD_D1 DIO_PIN1
@@ -21,10 +21,11 @@
 #define LCD_ON_NOCURSOR 0x0C
 #define LCD_CLEAR_SCREEN 0b00000001
 #define LCD_RETURN_HOME 0b00000010
-
-#define LCD_ENTRY_MODE 0b00000110
-#define LCD_DISPLAY_CONTROL 0b00001100
-#define LCD_FUNCTION_SET 0b00111000
+/*Deprecated definitions*/
+/**/
+/*#define LCD_ENTRY_MODE 0b00000110*/
+/*#define LCD_DISPLAY_CONTROL 0b00001100*/
+/*#define LCD_FUNCTION_SET 0b00111000*/
 
 
 #define LCD_MOVE_CURSOR_LEFT 0x14
@@ -63,6 +64,29 @@
  *on LCD row.
  * */
 #define  LCD_XPOS_SHIFT 6
+
+
+/*LCD configurations*/
+
+/*Entry mode*/
+#define LCD_SET_ENTRY_MODE 0x04
+#define LCD_MOVE_CURSOR_RIGHT 0x02
+
+
+/*Display on/off control */
+#define LCD_DISPLAY_ON 0x0C
+#define LCD_DISPLAY_OFF 0x08
+
+#define LCD_CURSOR_ON 0x0A
+#define LCD_CURSOR_OFF 0x08
+
+#define LCD_CURSOR_BLINK_ON 0x09
+#define LCD_CURSOR_BLINK_OFF 0x08
+
+/*Function set*/
+#define LCD_FUNCTION_SET 0x20
+#define LCD_8BIT 0x10
+#define LCD_4LINES 0x08
 
 /*Function definitions*/
 void LCD_vidInit(void);

@@ -17,10 +17,7 @@
 #include "LCD_interface.h"
 #include <util/delay.h>
 
-/**
- * @brief initializes LCD
- *
- */
+
 void LCD_vidInit(void) {
 	DIO_vidSetPinDirection(LCD_DATA_PORT,LCD_D0,DIO_OUTPUT);
 	DIO_vidSetPinDirection(LCD_DATA_PORT,LCD_D1,DIO_OUTPUT);
@@ -38,17 +35,12 @@ void LCD_vidInit(void) {
 	
 	LCD_vidSendCommand(LCD_CLEAR_SCREEN); /*Clear screen*/
 	LCD_vidSendCommand(LCD_RETURN_HOME); /*Move to home*/
-	LCD_vidSendCommand(0b00000110); /*Set entry mode*/
-	LCD_vidSendCommand(0b00001100); /*Display On/Off control*/
-	LCD_vidSendCommand(0b00111000); /*Function Set*/
+	LCD_vidSendCommand(LCD_SET_ENTRY_MODE|LCD_MOVE_CURSOR_RIGHT); /*Set entry mode*/
+	LCD_vidSendCommand(LCD_DISPLAY_ON); /*Display On/Off control*/
+	LCD_vidSendCommand(LCD_FUNCTION_SET|LCD_8BIT|LCD_4LINES); /*Function Set*/
 
 }
 
-/**
- * @breif Sends command to LCD.
- * @param commandCpy Commanad to be sent.
- * @return void
- */
 void LCD_vidSendCommand(u8 commandCpy) {
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_RS,STD_LOW);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_RW,STD_LOW);
@@ -63,10 +55,11 @@ void LCD_vidSendCommand(u8 commandCpy) {
 	DIO_vidSetPinValue(LCD_DATA_PORT,LCD_D7,GET_BIT(commandCpy,7));
 
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_HIGH);
-	_delay_ms(1);
+	_delay_ms(2);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_LOW);
-	_delay_ms(1);
+	_delay_ms(2);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_HIGH);
+	_delay_ms(2);
 }
 
 void LCD_vidWriteCharacter(u8 charCpy) {
@@ -83,9 +76,9 @@ void LCD_vidWriteCharacter(u8 charCpy) {
 	DIO_vidSetPinValue(LCD_DATA_PORT,LCD_D7,GET_BIT(charCpy,7));
 
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_HIGH);
-	_delay_ms(1);
+	_delay_ms(2);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_LOW);
-	_delay_ms(1);
+	_delay_ms(2);
 	DIO_vidSetPinValue(LCD_CTRL_PORT,LCD_E,STD_HIGH);
 }
 
