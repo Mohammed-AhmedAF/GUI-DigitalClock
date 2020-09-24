@@ -12,6 +12,7 @@ A digital clock using the AVR ATMega16 (or ATMega32) and DS-1307 RTC that is set
 * Get temperature of a city (name in python code) from the web, and send it to MCU.
 * Clear LCD screen with GUI.
 * GUI is working on both Linux and Windows.
+* Utilizing sleep mode to conserve power.
 
 ## Notice
 The packages `python3-tk`, `pyserial` should be installed. tk is used to make the GUI and pyserial is used for UART communication by the GUI app.
