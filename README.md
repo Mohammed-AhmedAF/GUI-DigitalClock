@@ -41,6 +41,12 @@ Adding cycling of baudrate via external interrupt
 | RW | PD4 |
 | En | PD5 |
 
+### USB-TTL Wiring
+| USB-TTL | AVR pin |
+| ------- | ------- |
+| Tx | PD0 (Rx) |
+| Rx | PD1 (Tx) |
+
 
 ## Pictures
 ![image](/images/gui_screenshot.png) 
