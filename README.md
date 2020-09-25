@@ -47,6 +47,10 @@ Adding cycling of baudrate via external interrupt
 | Tx | PD0 (Rx) |
 | Rx | PD1 (Tx) |
 
+### LED Wiring
+| LED | AVR pin|
+| --- | --- |
+| Anode | PA3 |
 
 ## Pictures
 ![image](/images/gui_screenshot.png) 
