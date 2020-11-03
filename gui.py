@@ -193,7 +193,7 @@ baudrateCmbox['values'] = [9600,19200,38400,57600,115200]
 baudrateCmbox.current(0)
 
 connectBtn = Button(connectionFrame,text="Connect",command=connectByUART)
-#Port values are defined based on OS the gui is running on
+#Port values are defined based on OS the GUI is running on
 if not (platform.system().startswith("Win")):
     port = ["/dev/ttyUSB0","Other"]
 else:
