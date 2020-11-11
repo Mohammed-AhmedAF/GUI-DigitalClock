@@ -22,7 +22,7 @@ Just put the files of the project in one folder/directory, and then run `make bu
 
 Assuming `avr-dude` is installed on your system, you can run `make load` to load the program into the MCU.
 
-## Todo
+## To-do
 Adding cycling of baudrate via external interrupt
 
 ## Wiring
