@@ -214,7 +214,7 @@ void DCLOCK_vidDisplayTime(void)
 void DCLOCK_vidCountOneSecond(void)
 {
 	u32CountTime++;
-	if (u32CountTime == 31250)
+	if (u32CountTime == DCLOCK_OVF_COUNT_SECOND)
 	{
 		u8DisplayTimeFlag = 1;
 		u32CountTime = 0;

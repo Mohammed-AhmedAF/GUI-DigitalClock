@@ -22,4 +22,7 @@ void DCLOCK_vidDisplayTime(void);
 #define DCLOCK_ALARM_MINUTE_ADDRESS 1
 #define DCLOCK_MESSAGESIZE 4
 
+/*Number of OVFs for 1 second*/
+#define DCLOCK_OVF_COUNT_SECOND 31250
+
 #endif
