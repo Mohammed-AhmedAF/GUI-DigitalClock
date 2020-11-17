@@ -216,6 +216,7 @@ void DCLOCK_vidCountOneSecond(void)
 	u32CountTime++;
 	if (u32CountTime == DCLOCK_OVF_COUNT_SECOND)
 	{
+		/*Flag may not be needed since there is on task in while loop*/
 		u8DisplayTimeFlag = 1;
 		u32CountTime = 0;
 		
