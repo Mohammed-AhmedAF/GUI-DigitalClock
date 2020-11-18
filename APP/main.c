@@ -49,6 +49,8 @@ void main(void)
 	DCLOCK_vidCheckAlarmFlag();
 	/*Enabling global interrupt, to allow all interrupt handling*/
 	INTERRUPTS_vidSetGlobalInterruptFlag();
+	
+	/*Background process*/
 	while(1) {
 		/*Refreshing content on the LCD every second*/
 		DCLOCK_vidDisplayTime();
