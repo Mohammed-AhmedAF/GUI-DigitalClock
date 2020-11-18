@@ -50,6 +50,7 @@ void main(void)
 	/*Enabling global interrupt, to allow all interrupt handling*/
 	INTERRUPTS_vidSetGlobalInterruptFlag();
 	while(1) {
+		/*Refreshing content on the LCD every second*/
 		DCLOCK_vidDisplayTime();
 		/*Putting the MCU in sleep mode*/
 		SYSCNTRL_vidEnableSleep(SYSCNTRL_SLEEPMODE_IDLE);
