@@ -5,8 +5,8 @@
 #ifndef _LCD_INTERFACE_H
 #define _LCD_INTERFACE_H
 
-#define LCD_DATA_PORT DIO_PORTB
-#define LCD_CTRL_PORT DIO_PORTA
+#define LCD_DATA_PORT DIO_PORTD
+#define LCD_CTRL_PORT DIO_PORTD
 
 #define LCD_D0 DIO_PIN0
 #define LCD_D1 DIO_PIN1
@@ -27,12 +27,9 @@
 /*#define LCD_DISPLAY_CONTROL 0b00001100*/
 /*#define LCD_FUNCTION_SET 0b00111000*/
 
-
-#define LCD_MOVE_CURSOR_LEFT 0x14
-
-#define LCD_E DIO_PIN5
-#define LCD_RW DIO_PIN4
-#define LCD_RS DIO_PIN3
+#define LCD_E DIO_PIN2
+#define LCD_RW DIO_PIN1
+#define LCD_RS DIO_PIN0
 
 /*Macros defined to be used with the GoTOXY function*/
 #define LCD_XPOS0 0
@@ -71,6 +68,9 @@
 /*Entry mode*/
 #define LCD_SET_ENTRY_MODE 0x04
 #define LCD_MOVE_CURSOR_RIGHT 0x02
+#define LCD_MOVE_CURSOR_LEFT 0x00
+#define LCD_DISPLAY_SHIFT_ON 0x01
+#define LCD_DISPLAY_SHIFT_OFF 0x00
 
 
 /*Display on/off control */
@@ -86,6 +86,7 @@
 /*Function set*/
 #define LCD_FUNCTION_SET 0x20
 #define LCD_8BIT 0x10
+#define LCD_4BIT 0x00
 #define LCD_4LINES 0x08
 
 /*Function definitions*/
@@ -97,6 +98,8 @@ void LCD_vidBlinkString(s8*,u8);
 void LCD_vidWriteSizedString(s8*,u8);
 void LCD_vidGoToXY(u8,u8);
 void LCD_vidWriteNumber(u16);
+void LCD_vidWriteSizedNumber(u16, u8);
 void LCD_vidWriteInPlace(u8,u8,u8);
 void LCD_vidClearLine(u8);
+void LCD_vidClearSpace(u8 u8xPosStart, u8 u8xPosEnd, u8 u8yPos);
 #endif
