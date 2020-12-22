@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#platform to figure out which OS is used.
 import platform
 from tkinter import *
 from tkinter import ttk
@@ -6,6 +7,7 @@ from tkinter.font import Font
 from datetime import datetime as dt
 import serial
 import requests
+#json to hold received data by API
 import json
 
 #global variables
