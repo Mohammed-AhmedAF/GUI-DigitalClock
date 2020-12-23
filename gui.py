@@ -235,7 +235,7 @@ actionsFrame.grid(row=1,column=0,padx=10,pady=5,sticky=N+S)
 alarmFrame.grid(row=1,column=1,padx=10,pady=5,sticky=N+S)
 temperatureFrame.grid(row=1,column=2,padx=10,pady=5,sticky=N+S)
 connectionFrame.grid(row=1,column=3,padx=10,pady=5,sticky=N+S)
-stopwatchFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S);
+stopwatchFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S)
 
 #Temperature elements
 temperatureDisplay.grid(row=0,column=0,padx=10,pady=5,sticky=N+S)
