@@ -6,6 +6,7 @@ from tkinter import ttk
 from tkinter.font import Font
 from datetime import datetime as dt
 import serial
+#request is used to get temperature via API
 import requests
 #json to hold received data by API
 import json
