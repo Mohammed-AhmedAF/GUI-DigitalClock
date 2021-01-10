@@ -23,6 +23,8 @@ Install `pyserial` by: `pip3 install pyserial`
 Just put the files of the project in one folder/directory, and then run `make build` from the command line.
 
 Assuming `avr-dude` is installed on your system, you can run `make load` to load the program into the MCU.
+ 
+You can turn the Python script into a standalone application using `pyinstaller --onefile --noconsole -n "DigitalClock GUI" gui.py`.
 
 ## To-do
 Adding cycling of baudrate via external interrupt
