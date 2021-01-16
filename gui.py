@@ -46,14 +46,11 @@ def prepareFrame(a,b,c,d):
     frame[3] = d.to_bytes(1,'little');
     return frame
 
-def updateStatusbar(message):
-    statusLabel['text'] = message
-
 root = Tk()
 root.title("Time Setter")
 root.resizable(width=True,height=False)
 
-photo = PhotoImage(file="images/Crystal_Clear_app_xclock.png")
+photo = PhotoImage(file="images/clock.png")
 root.iconphoto(False,photo)
 
 actionsFrame = LabelFrame(root,text="Set current time",padx=10,pady=5)
@@ -66,6 +63,11 @@ stopwatchFrame = LabelFrame(root,text="Stopwatch",padx=10,pady=5)
 hoursSpin = Spinbox(alarmFrame,from_=0,to=23,font=Font(size=14))
 minutesSpin = Spinbox(alarmFrame,from_=0,to=59,font=Font(size=14))
 statusLabel = Label(root,text="",relief=SUNKEN,anchor=W)
+
+def updateStatusbar(message):
+    statusLabel['text'] = message
+
+
 systemLabel = Label(root,text="",relief=SUNKEN,anchor=W)
 getButton = Button(actionsFrame,text="Get current time",command=getTime)
 
@@ -261,7 +263,7 @@ setAlarmButton.grid(row=1,column=0,sticky=W+E,pady=5)
 clearAlarmButton.grid(row=1,column=1,sticky=W+E,pady=5)
 
 #Status and system bars
-statuslabel.grid(row=2,column=0,columnspan=3,sticky=w+e,padx=10)
+statusLabel.grid(row=2,column=0,columnspan=3,sticky=W+E,padx=10)
 systemLabel.grid(row=2,column=3,columnspan=2,sticky=W+E,padx=10)
 
 root.mainloop()
