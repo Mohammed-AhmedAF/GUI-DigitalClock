@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
+#platform to figure out which OS is used.
 import platform
 from tkinter import *
 from tkinter import ttk
 from tkinter.font import Font
 from datetime import datetime as dt
 import serial
+#request is used to get temperature via API
 import requests
+#json to hold received data by API
 import json
 
 #global variables
@@ -234,7 +237,7 @@ actionsFrame.grid(row=1,column=0,padx=10,pady=5,sticky=N+S)
 alarmFrame.grid(row=1,column=1,padx=10,pady=5,sticky=N+S)
 temperatureFrame.grid(row=1,column=2,padx=10,pady=5,sticky=N+S)
 connectionFrame.grid(row=1,column=3,padx=10,pady=5,sticky=N+S)
-stopwatchFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S);
+stopwatchFrame.grid(row=1,column=4,padx=10,pady=5,sticky=N+S)
 
 #Temperature elements
 temperatureDisplay.grid(row=0,column=0,padx=10,pady=5,sticky=N+S)
