@@ -28,7 +28,7 @@ Assuming `avr-dude` is installed on your system, you can run `make load` to load
 You can turn the Python script into a standalone application using `pyinstaller --onefile --noconsole -n "DigitalClock GUI" gui.py`.
 
 ## To-do
-Adding cycling of baudrate via external interrupt
+Adding cycling of baudrate via external interrupt.
 
 ## Wiring
 ### LCD Wiring
