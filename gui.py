@@ -28,7 +28,7 @@ serialPort = str()
 connectedFlag = 0
 time = "Test"
 
-def sendFrame(frame):
+def sendFrame(frame) -> None:
     ser.write(frame[0].encode())
     ser.write(frame[1].encode())
     ser.write(frame[2].encode())
@@ -86,7 +86,7 @@ def sendDayOfWeek():
     except:
         updateStatusbar("Error sending day of the week")
 
-def sendDate():
+def sendDate() -> None:
     global daysNow, monthsNow, yearsNow
     daysNow = dt.now().day
     monthsNow = dt.now().month
