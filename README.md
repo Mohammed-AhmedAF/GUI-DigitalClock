@@ -1,6 +1,6 @@
 # GUI-DigitalClock
 ## Summary
-A digital clock using the AVR ATMega16 (or ATMega32) and DS-1307 RTC that is set using a UART connection to a computer, the time is got from the computer clock and is sent using a GUI application. You can also set and clear an alarm using the GUI application. The firmware doesn't use an RTOS but rather a foreground-background architecture with sleep mode.
+A digital clock using the AVR ATMega16 (or ATMega32) and DS-1307 RTC that is set using a UART connection to a computer, the time is got from the computer clock and is sent using a GUI application. You can also set and clear an alarm using the GUI application. The firmware doesn't use an RTOS but rather a foreground-background architecture with sleep mode to conserve power.
 
 ## Features
 * Display current time and date including day of the week.
