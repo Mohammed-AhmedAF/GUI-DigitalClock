@@ -66,7 +66,7 @@ void DCLOCK_vidGetTime(void)
 	{
 		u8index = 0;
 		/*Set time*/
-		if (u8MessageArray[0] == 'c')
+		if (u8MessageArray[DCLOCK_INDEX_COMMAND] == 'c')
 		{
 			rtc.u8Seconds = RTC_DEC2BCD(u8MessageArray[3]);
 			rtc.u8Minutes = RTC_DEC2BCD(u8MessageArray[2]);
@@ -75,7 +75,7 @@ void DCLOCK_vidGetTime(void)
 	
 		}
 		/*Set alarm*/
-		else if (u8MessageArray[0] == 'a')
+		else if (u8MessageArray[DCLOCK_INDEX_COMMAND] == 'a')
 		{
 			/*Store in alarm variables*/
 			strctAlarm.u8Hour = u8MessageArray[1];
@@ -99,7 +99,7 @@ void DCLOCK_vidGetTime(void)
 
 		}
 		/*Set date*/
-		else if (u8MessageArray[0] == 'd')
+		else if (u8MessageArray[DCLOCK_INDEX_COMMAND] == 'd')
 		{
 			rtc.u8Days = RTC_DEC2BCD(u8MessageArray[1]);
 			rtc.u8Months = RTC_DEC2BCD(u8MessageArray[2]);
@@ -107,7 +107,7 @@ void DCLOCK_vidGetTime(void)
 			RTC_vidSetDate(&rtc);
 		}
 		/*Set day of the week*/
-		else if (u8MessageArray[0] == 'w')
+		else if (u8MessageArray[DCLOCK_INDEX_COMMAND] == 'w')
 		{
 			LCD_vidSendCommand(LCD_CLEAR_SCREEN);
 			rtc.u8DayOfWeek = RTC_DEC2BCD(u8MessageArray[1]);
@@ -115,17 +115,17 @@ void DCLOCK_vidGetTime(void)
 			DCLOCK_vidResetSystem();
 		}
 		/*Clear alarm*/
-		else if (u8MessageArray[0] == 'u')
+		else if (u8MessageArray[DCLOCK_INDEX_COMMAND] == 'u')
 		{
 			DCLOCK_vidClearAlarmFlag();
 		}
 		/*Clear screen*/
-		else if (u8MessageArray[0] == 'r')
+		else if (u8MessageArray[DCLOCK_INDEX_COMMAND] == 'r')
 		{
 			DCLOCK_vidResetSystem();
 		}
 		/*Set temperature*/
-		else if (u8MessageArray[0] == 't')
+		else if (u8MessageArray[DCLOCK_INDEX_COMMAND] == 't')
 		{
 			u8Temperature = u8MessageArray[1];
 			LCD_vidGoToXY(LCD_XPOS15,LCD_YPOS3);
@@ -133,7 +133,7 @@ void DCLOCK_vidGetTime(void)
 			LCD_vidWriteNumber(u8Temperature);
 		}
 		/*Set stopwatch*/
-		else if (u8MessageArray[0] == 's')
+		else if (u8MessageArray[DCLOCK_INDEX_COMMAND] == 's')
 		{
 			LCD_vidGoToXY(LCD_XPOS1,LCD_YPOS3);
 			if (STOPWATCH_u8CheckFlag()  == 0)
