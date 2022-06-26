@@ -17,7 +17,7 @@ void RTC_vidInit(void)
 {
 	TWI_vidInit();
 	TWI_vidSendStart();
-
+	/*Sending address of DS1307 RTC module*/
 	TWI_vidSendByte(0xd0);
 	/*Sending address of control register*/
 	TWI_vidSendByte(0x07);
