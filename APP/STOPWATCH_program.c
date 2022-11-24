@@ -4,9 +4,9 @@
 #include "STOPWATCH_interface.h"
 
 /*Stopwatch variables*/
-volatile u8 u8SSeconds = 0;
-volatile u8 u8SMinutes = 0;
-volatile u8 u8StopwatchFlag = 0;
+static volatile u8 u8SSeconds = 0;
+static volatile u8 u8SMinutes = 0;
+static volatile u8 u8StopwatchFlag = 0;
 
 
 void STOPWATCH_vidToggle()
