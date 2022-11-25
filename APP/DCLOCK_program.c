@@ -9,7 +9,7 @@
 #include "DCLOCK_interface.h"
 
 volatile u32 u32CountTime;
-volatile u8 u8index = 0;
+static volatile u8 u8index = 0;
 volatile u8 u8Byte;
 volatile u8 u8Temperature;
 volatile u8 u8DisplayTimeFlag = 0;
