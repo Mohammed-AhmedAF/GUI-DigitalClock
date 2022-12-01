@@ -14,7 +14,7 @@ volatile u8 u8Byte;
 volatile u8 u8Temperature;
 volatile u8 u8DisplayTimeFlag = 0;
 RTC_t rtc;
-volatile u8 u8MessageArray[DCLOCK_MESSAGESIZE];
+static volatile u8 u8MessageArray[DCLOCK_MESSAGESIZE];
 volatile u8 u8AlarmFlag = DCLOCK_ALARM_CLEARED;
 const u8 * u8DaysOfWeek_Arr[7] = {"Mon","Tues","Wed","Thu","Fri","Sat","Sun"};
 
