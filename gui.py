@@ -10,6 +10,7 @@ import serial
 import requests
 #json to hold received data by API
 import json
+import ttkbootstrap as ttkb
 
 #global variables
 whoursNow = 0
@@ -49,8 +50,9 @@ def prepareFrame(a,b,c,d):
     frame[3] = d.to_bytes(1,'little');
     return frame
 
-root = Tk()
+root = ttkb.Window()
 root.title("Time Setter")
+ttkb.Style("darkly")
 root.resizable(width=True,height=False)
 
 photo = PhotoImage(file="images/clock.png")
