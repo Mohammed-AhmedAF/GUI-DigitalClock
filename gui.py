@@ -35,7 +35,7 @@ def sendFrame(frame) -> None:
     ser.write(frame[2].encode())
     ser.write(frame[3].encode())
 
-def getTime():
+def getTime() -> None:
     global hoursNow, minutesNow, secondsNow
     hoursNow = dt.now().hour
     minutesNow = dt.now().minute
@@ -105,7 +105,7 @@ def sendDate() -> None:
 
 sendDateBtn = Button(actionsFrame,text="Send date",command=sendDate)
 
-def sendTime():
+def sendTime() -> None:
     getTime()
     try:
         ser.write(b'c')
